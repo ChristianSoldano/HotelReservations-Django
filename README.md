@@ -1,7 +1,5 @@
 ### Trabajo Practico Metodologia de Sistemas 3
 
-
-##Config
 Create a settings.json file with this format:
 ```json
 {
