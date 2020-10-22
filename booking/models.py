@@ -27,6 +27,7 @@ class Property(models.Model):
     # si explota hay que ver el on_delete de aca abajo. Cambia el ondelete por models.PROTECTED
     host = models.ForeignKey(Host, on_delete=models.PROTECT, blank=False, null=False)
     title = models.CharField(max_length=50, null=False, blank=False)
+    address = models.CharField(max_length=50, null=False, blank=False)
     description = models.TextField(null=False, blank=False)
     rate = models.FloatField(null=False, blank=False)
     pax = models.IntegerField(null=False, blank=False)
