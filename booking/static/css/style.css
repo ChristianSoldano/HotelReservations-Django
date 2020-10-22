@@ -124,7 +124,7 @@ ul, ol {
 	background-position: top center;
 }
 .spad {
-	padding-top: 100px;
+
 	padding-bottom: 100px;
 }
 .spad-2 {
@@ -562,6 +562,13 @@ ul, ol {
 	float: left;
 	margin-right: 30px;
 }
+
+.check-boxes {
+	width: 548px;
+	float: left;
+	font-size: 16px;
+}
+
 .filter-form .second-row .price-range-wrap .price-text {
 	margin-bottom: 9px;
 }
@@ -1605,7 +1612,7 @@ ul, ol {
 .property-list .single-property-item .property-text .room-features li p {
 	font-size: 14px;
 	color: #19191a;
-	margin-bottom: 0;
+	margin-bottom: 20px;
 	margin-top: 4px;
 }
 .property-pagination {
