@@ -5,6 +5,8 @@ from django.db.models.functions import Now
 
 class Host(User):
     dni = models.CharField(max_length=8, unique=True)
+    created_at = models.DateField(auto_now=True, blank=False, null=False)
+    updated_at = models.DateField(auto_now=True, blank=False, null=False)
 
     class Meta:
         verbose_name_plural = "Hosts"
@@ -13,6 +15,8 @@ class Host(User):
 
 class City(models.Model):
     name = models.CharField(max_length=100, unique=True, null=False)
+    created_at = models.DateField(auto_now=True, blank=False, null=False)
+    updated_at = models.DateField(auto_now=True, blank=False, null=False)
 
     class Meta:
         verbose_name_plural = "Cities"
@@ -23,18 +27,22 @@ class Property(models.Model):
     # si explota hay que ver el on_delete de aca abajo. Cambia el ondelete por models.PROTECTED
     host = models.ForeignKey(Host, on_delete=models.PROTECT, blank=False, null=False)
     title = models.CharField(max_length=50, null=False, blank=False)
+    address = models.CharField(max_length=50, null=True, blank=False)
+    city = models.ForeignKey(City, on_delete=models.PROTECT, null=True)
     description = models.TextField(null=False, blank=False)
     rate = models.FloatField(null=False, blank=False)
     pax = models.IntegerField(null=False, blank=False)
     rooms = models.IntegerField(null=False, blank=False)
     bathrooms = models.IntegerField(null=False, blank=False)
     beds = models.IntegerField(null=False, blank=False)
-    garage = models.IntegerField(null=False, blank=False)
+    garage = models.BooleanField(null=False, blank=False)
     pets = models.BooleanField(null=False, blank=False)
     wifi = models.BooleanField(null=False, blank=False)
     pool = models.BooleanField(null=False, blank=False)
     kitchen = models.BooleanField(null=False, blank=False)
     active = models.BooleanField(default=True, null=False)
+    created_at = models.DateField(auto_now=True, blank=False, null=False)
+    updated_at = models.DateField(auto_now=True, blank=False, null=False)
 
     class Meta:
         verbose_name_plural = "Properties"
@@ -58,6 +66,8 @@ class Booking(models.Model):
     property = models.ForeignKey(Property, on_delete=models.PROTECT, blank=False, null=False)
     checkin = models.DateField(blank=False, null=False)
     checkout = models.DateField(blank=False, null=False)
+    created_at = models.DateField(auto_now=True, blank=False, null=False)
+    updated_at = models.DateField(auto_now=True, blank=False, null=False)
 
     class Meta:
         verbose_name_plural = "Bookings"
@@ -68,6 +78,8 @@ class BookingPeriod(models.Model):
     start = models.DateField(blank=False, null=False)
     finish = models.DateField(blank=False, null=False)
     property = models.ForeignKey(Property, null=False, blank=False, on_delete=models.CASCADE)
+    created_at = models.DateField(auto_now=True, blank=False, null=False)
+    updated_at = models.DateField(auto_now=True, blank=False, null=False)
 
     class Meta:
         constraints = [

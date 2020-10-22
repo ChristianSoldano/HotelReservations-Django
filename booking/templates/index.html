@@ -1,8 +1,7 @@
-
 {% extends "base.html" %}
 {% load static %}
-{% block content %}
 
+{% block content %}
 <section class="hero-section">
     <div class="single-hero-item set-bg" data-setbg="{% static 'img/hero/hero-1.jpg' %}">
         <div class="container">
@@ -16,45 +15,87 @@
                                         <i class="fa fa-search"></i>
                                         Find Your Home
                                     </div>
-                                    <div class="home-text">
-                                        <i class="fa fa-home"></i>
-                                        House For Sell
-                                    </div>
                                 </div>
-                                <form action="#" class="filter-form">
+                                <form action="/formulario/" class="filter-form" method="post">
+                                    {% csrf_token %}
                                     <div class="first-row">
-                                        <select>
-                                            <option value="">Villa & Pool</option>
+                                        <select id="paxs" name="paxs">
+                                            <option selected="true" value="any">Any Paxs</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
                                         </select>
-                                        <select>
-                                            <option value="">Title</option>
+                                        <select id="rooms" name="rooms">
+                                            <option selected="true" value="any">Any Rooms</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
                                         </select>
-                                        <select>
-                                            <option value="">Ani City</option>
+                                        <select id="bathrooms" name="bathrooms">
+                                            <option selected="true" value="any">Any Bathrooms
+                                            </option>
+                                            </option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
                                         </select>
-                                        <select>
-                                            <option value="">Any Bithrooms</option>
+                                        <select id="beds" name="beds">
+                                            <option selected="true" value="any">Any Beds</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
                                         </select>
                                     </div>
                                     <div class="second-row">
-                                        <select>
-                                            <option value="">Any Bedrooms</option>
-                                        </select>
                                         <div class="price-range-wrap">
                                             <div class="price-text">
                                                 <label for="priceRange">Price:</label>
-                                                <input type="text" id="priceRange" readonly>
+                                                <input type="text" id="priceRange" name="priceRange" readonly>
                                             </div>
                                             <div id="price-range" class="slider"></div>
                                         </div>
-                                        <div class="room-size-range">
-                                            <div class="price-text">
-                                                <label for="roomsizeRange">Size:</label>
-                                                <input type="text" id="roomsizeRange" readonly>
-                                            </div>
-                                            <div id="roomsize-range" class="slider"></div>
+
+                                        <div class="check-boxes">
+                                            <label for="garage"> Garage</label>
+                                            <input class="mr-5 mt-4" type="checkbox" id="garage" name="garage"
+                                                   value="true">
+
+                                            <label for="pets"> Pets</label>
+                                            <input class="mr-5" type="checkbox" id="pets" name="pets" value="true">
+
+                                            <label for="wifi"> Wifi</label>
+                                            <input class="mr-5" type="checkbox" id="wifi" name="wifi" value="true">
+
+                                            <label for="pool"> Pool</label>
+                                            <input class="mr-5" type="checkbox" id="pool" name="pool" value="true">
+
+                                            <label for="kitchen"> Kitchen</label>
+                                            <input type="checkbox" id="kitchen" name="kitchen" value="true">
                                         </div>
-                                        <button type="button" class="search-btn">Search</button>
+                                        <button type="submit" class="search-btn">Search</button>
                                     </div>
                                 </form>
                             </div>
@@ -102,6 +143,4 @@
         </div>
     </div>
 </section>
-
-
 {% endblock %}
