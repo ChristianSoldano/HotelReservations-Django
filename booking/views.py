@@ -1,4 +1,4 @@
-from booking.models import Property, City, Booking
+from booking.models import Property, City, Booking, BookingPeriod
 from django.shortcuts import render, redirect
 
 
@@ -21,12 +21,21 @@ def property_detail(request, id_property):
 
 
 def do_a_booking(request):
-    booking = Booking(
-        property=Property.objects.get(id=request.POST['idProperty']),
-        checkin=request.POST['checkin'],
-        checkout=request.POST['checkout'],
-        email=request.POST['email'],
-        first_name=request.POST['first_name'],
-        last_name=request.POST['last_name'])
-    booking.save()
+    property_to_rent = Property.objects.get(id=request.POST['idProperty'])
+    period = BookingPeriod.objects.filter(start__lte=request.POST['checkin'],
+                                          finish__gte=request.POST['checkout'], property=property_to_rent)
+    # Testear y ver de usar el distinct en caso de que el exclude no sirva
+    if Booking.objects.filter(checkin__range=(period.start, period.finish),
+                              checkout__range=(period.start, period.finish)).exists():
+        print("No se puede hacer la reserva")
+    else:
+        booking = Booking(
+            property=property_to_rent,
+            checkin=request.POST['checkin'],
+            checkout=request.POST['checkout'],
+            email=request.POST['email'],
+            first_name=request.POST['first_name'],
+            last_name=request.POST['last_name'])
+        booking.save()
+
     return redirect('booking:properties_list', request)  # No se si va
