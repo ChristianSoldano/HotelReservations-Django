@@ -10,14 +10,14 @@ def home_page(request):
 
 def properties_list(request):
     cities = City.objects.all()
-    properties = Property.objects.all()
+    properties = Property.objects.filter(active=True)
 
-    return render(request, 'properties-list.html', {'properties': properties, 'cities': cities})
+    return render(request, 'property-list.html', {'properties': properties, 'cities': cities})
 
 
 def property_detail(request, id_property):
     obj = Property.objects.get(id=id_property)
-    return render(request, 'properties-detail.html', {'property': obj})
+    return render(request, 'property-detail.html', {'property': obj})
 
 
 def do_a_booking(request):
