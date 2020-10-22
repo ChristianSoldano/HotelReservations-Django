@@ -5,6 +5,8 @@ from django.db.models.functions import Now
 
 class Host(User):
     dni = models.CharField(max_length=8, unique=True)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
 
     class Meta:
         verbose_name_plural = "Hosts"
@@ -13,6 +15,8 @@ class Host(User):
 
 class City(models.Model):
     name = models.CharField(max_length=100, unique=True, null=False)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
 
     class Meta:
         verbose_name_plural = "Cities"
@@ -35,6 +39,8 @@ class Property(models.Model):
     pool = models.BooleanField(null=False, blank=False)
     kitchen = models.BooleanField(null=False, blank=False)
     active = models.BooleanField(default=True, null=False)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
 
     class Meta:
         verbose_name_plural = "Properties"
@@ -58,6 +64,8 @@ class Booking(models.Model):
     property = models.ForeignKey(Property, on_delete=models.PROTECT, blank=False, null=False)
     checkin = models.DateField(blank=False, null=False)
     checkout = models.DateField(blank=False, null=False)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
 
     class Meta:
         verbose_name_plural = "Bookings"
@@ -68,6 +76,8 @@ class BookingPeriod(models.Model):
     start = models.DateField(blank=False, null=False)
     finish = models.DateField(blank=False, null=False)
     property = models.ForeignKey(Property, null=False, blank=False, on_delete=models.CASCADE)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
 
     class Meta:
         constraints = [
