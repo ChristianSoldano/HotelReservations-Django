@@ -17,7 +17,9 @@ def properties_list(request):
 
 def property_detail(request, id_property):
     obj = Property.objects.get(id=id_property)
-    return render(request, 'property-detail.html', {'property': obj})
+    # format dd-mm-yyyy
+    reserved_dates = ["24-10-2020", "25-10-2020", "28-10-2020", "29-10-2020", "30-10-2020"]
+    return render(request, 'property-details.html', {'property': obj, 'reserved_dates': reserved_dates})
 
 
 def do_a_booking(request):
