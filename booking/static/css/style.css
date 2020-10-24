@@ -44,6 +44,7 @@
   -webkit-line-clamp: 4;
 }
 
+
 html, body {
 	height: 100%;
 	font-family: "Poppins", sans-serif;
@@ -156,12 +157,14 @@ ul, ol {
 	padding: 12px 50px 10px;
 }
 .site-btn {
-	display: inline-block;
-	font-size: 14px;
-	color: #ffffff;
+    width: 100%;
+	font-size: 16px;
+	height: 46px;
 	background: #2cbdb8;
-	padding: 8px 30px 10px;
+	color: #ffffff;
+	border: none;
 	border: 1px solid #2cbdb8;
+	cursor: pointer;
 }
 /* Preloder */
 
@@ -1715,7 +1718,6 @@ ul, ol {
 ---------------------------*/
 
 .property-details-section {
-	padding-top: 50px;
 	padding-bottom: 80px;
 }
 .pd-details-text {
@@ -1764,7 +1766,7 @@ ul, ol {
 	border: 2px solid #2cbdb8;
 }
 .pd-details-text .pd-desc {
-	margin-bottom: 54px;
+	margin-bottom: 20px;
 }
 .pd-details-text .pd-desc h4 {
 	font-size: 22px;
@@ -1792,11 +1794,12 @@ ul, ol {
 	color: #ffffff;
 	background: #2cbdb8;
 }
+
 .pd-details-text .pd-details-tab .tab-content .property-more-table {
 	padding-left: 30px;
 	border: 1px solid #ebebeb;
 	border-top: none;
-	padding-bottom: 6px;
+    overflow: auto;
 }
 .pd-details-text .pd-details-tab .tab-content .property-more-table table tbody tr {
 	border-bottom: 1px solid #ebebeb;
@@ -1814,6 +1817,7 @@ ul, ol {
 }
 .pd-details-text .pd-details-tab .tab-content .property-more-table table tbody tr td.p-value {
 	color: #19191a;
+
 }
 .pd-details-text .pd-details-tab .tab-content .property-more-table .left-table {
 	width: 48%;
@@ -1822,6 +1826,7 @@ ul, ol {
 }
 .pd-details-text .pd-details-tab .tab-content .property-more-table .right-table {
 	width: 49%;
+
 }
 .pd-details-text .pd-details-tab .tab-content .pd-table-desc {
 	border: 1px solid #ebebeb;
@@ -2533,9 +2538,12 @@ ul, ol {
 	line-height: 26px;
 }
 .contact-text {
-	padding-top: 75px;
+
 	padding-bottom: 89px;
 }
+
+
+
 .contact-text .section-title {
 	text-align: left;
 	margin-bottom: 50px;
