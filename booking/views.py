@@ -9,8 +9,32 @@ def home_page(request):
 
 
 def properties_list(request):
-    cities = City.objects.all()
-    properties = Property.objects.filter(active=True)
+    cities = []
+    properties = []
+
+    if request.method == 'POST':
+        property_filters = {
+            "active": True
+        }
+
+        if request.POST["rooms"] != "any":
+            property_filters["rooms"] = int(request.POST["rooms"])
+        if request.POST["bathrooms"] != "any":
+            property_filters["bathrooms"] = int(request.POST["bathrooms"])
+        if request.POST["beds"] != "any":
+            property_filters["beds"] = int(request.POST["beds"])
+
+        price = request.POST["priceRange"].split("-")
+
+        property_filters["rate__gte"] = price[0]
+        property_filters["rate__lte"] = price[1]
+
+        properties = Property.objects.filter(**property_filters)
+
+        print(property_filters)
+    else:
+        cities = City.objects.all()
+        properties = Property.objects.filter(active=True)
 
     return render(request, 'property-list.html', {'properties': properties, 'cities': cities})
 
