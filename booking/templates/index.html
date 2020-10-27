@@ -76,7 +76,9 @@
                                                placeholder="dd/mm/aaaa"/>
                                         <select id="city" name="city">
                                             <option selected="true" value="any">Any City</option>
-
+                                            {% for city in cities %}
+                                            <option value="{{city.id}}">{{city.name}}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                     <div class="second-row">

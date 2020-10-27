@@ -3,8 +3,9 @@ from booking.models import *
 
 
 def home_page(request):
-    return render(request, 'index.html')
-
+    cities = []
+    cities = City.objects.all()
+    return render(request, 'index.html',{'cities': cities})
 
 def properties_list(request):
     cities = []
@@ -22,17 +23,21 @@ def properties_list(request):
                     if request.POST[key] == 'true':
                         property_filters[key] = True
                     else:
-                        property_filters[key + "__gte"] = int(request.POST[key])
+                        if key == "city":
+                            c = City.objects.filter(id=request.POST[key])
+                            print(c)
+                            property_filters[key] = c[0]
+                           # print(property_filters[key])
+                        else:
+                            property_filters[key + "__gte"] = int(request.POST[key])
 
         price = request.POST["priceRange"].split("-")
 
         property_filters["rate__gte"] = price[0]
         property_filters["rate__lte"] = price[1]
 
-        properties = Property.objects.filter(**property_filters)
-    else:
-        cities = City.objects.all()
-        properties = Property.objects.filter(**property_filters)
+    cities = City.objects.all()
+    properties = Property.objects.filter(**property_filters)
 
     return render(request, 'property-list.html', {'properties': properties, 'cities': cities})
 

@@ -60,6 +60,12 @@
                             <option value="9">9</option>
                             <option value="10">10</option>
                         </select>
+                        <select id="city" name="city">
+                            <option selected="true" value="any">Any City</option>
+                            {% for city in cities %}
+                            <option value="{{city.id}}">{{city.name}}</option>
+                            {% endfor %}
+                        </select>
                         <div class="price-range-wrap">
                             <div class="price-text">
                                 <label for="priceRange">Price:</label>
