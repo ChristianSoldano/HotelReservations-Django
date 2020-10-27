@@ -12,20 +12,25 @@ def properties_list(request):
     cities = []
     properties = []
 
+    property_filters = {
+        "active": True
+    }
 
     if request.method == 'POST':
-        property_filters = {
-            "active": True
-        }
-        
-        if request.POST["paxs"] != "any":
-            property_filters["pax"] = int(request.POST["paxs"])
-        if request.POST["rooms"] != "any":
-            property_filters["rooms"] = int(request.POST["rooms"])
-        if request.POST["bathrooms"] != "any":
-            property_filters["bathrooms"] = int(request.POST["bathrooms"])
-        if request.POST["beds"] != "any":
-            property_filters["beds"] = int(request.POST["beds"])
+
+        for key in request.POST:
+            if key != 'csrfmiddlewaretoken' and key != 'priceRange':
+                if request.POST[key] != "any":
+                    property_filters[key] = int(request.POST[key])
+
+        # if request.POST["pax"] != "any":
+        #     property_filters["pax"] = int(request.POST["pax"])
+        # if request.POST["rooms"] != "any":
+        #     property_filters["rooms"] = int(request.POST["rooms"])
+        # if request.POST["bathrooms"] != "any":
+        #     property_filters["bathrooms"] = int(request.POST["bathrooms"])
+        # if request.POST["beds"] != "any":
+        #     property_filters["beds"] = int(request.POST["beds"])
 
         price = request.POST["priceRange"].split("-")
 
@@ -33,11 +38,9 @@ def properties_list(request):
         property_filters["rate__lte"] = price[1]
 
         properties = Property.objects.filter(**property_filters)
-
-        print(property_filters)
     else:
         cities = City.objects.all()
-        properties = Property.objects.filter(active=True)
+        properties = Property.objects.filter(**property_filters)
 
     return render(request, 'property-list.html', {'properties': properties, 'cities': cities})
 
