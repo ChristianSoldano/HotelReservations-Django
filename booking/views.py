@@ -19,14 +19,14 @@ def properties_list(request):
     if request.method == 'POST':
 
         for key in request.POST:
-            if key != 'csrfmiddlewaretoken' and key != 'priceRange':
+            if key != 'csrfmiddlewaretoken' and key != 'priceRange' and key != "datePickCheckout" and key != "datePickCheckin":
                 if request.POST[key] != "any":
                     if request.POST[key] == 'true':
                         property_filters[key] = True
                     else:
                         property_filters[key + "__gte"] = int(request.POST[key])
                     if key == "city":
-                        property_filters[key] = City.object.filter(id=request.POST[key])[0]
+                            property_filters[key] = City.objects.filter(id=request.POST[key])[0]
 
         price = request.POST["priceRange"].split("-")
 
