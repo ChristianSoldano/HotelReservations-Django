@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from booking.models import *
 from dateutil.parser import parse
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import Group
 
 
 def home_page(request):
@@ -78,5 +80,27 @@ def do_a_booking(request):
     return redirect('booking:properties_list', request)  # No se si va
 
 
+def register_view(request):
+    return render(request, "register.html")
+
+
 def register(request):
-    return render(request, 'register.html')
+    if request.method == 'POST':
+        # user = User.objects.create_user().save()
+
+        host = Host(email=request.POST["email"],
+                    username=request.POST["username"],
+                    first_name=request.POST["firstname"],
+                    last_name=request.POST["lastname"],
+                    dni=request.POST["dni"],
+                    is_staff=1,
+                    )
+        host.set_password(request.POST["password"])
+        host.save()
+
+        group = Group.objects.get(name='Host')
+        host.groups.add(group)
+
+        login_data = authenticate(username=request.POST["username"], password=request.POST["password"])
+        login(request, login_data)
+    return redirect("admin:index")

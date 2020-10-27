@@ -326,6 +326,9 @@ ul, ol {
 .top-nav .top-right .language-option .flag-dropdown ul li a:hover {
 	color: #2cbdb8;
 }
+
+
+
 .top-nav .top-right .property-sub {
 	display: inline-block;
 	background: #2CBDB8;
@@ -333,6 +336,14 @@ ul, ol {
 	color: #ffffff;
 	padding: 20px 30px;
 }
+
+.top-nav .top-right .register {
+	display: inline-block;
+	font-size: 14px;
+	color: #ffffff;
+	padding: 20px 30px;
+}
+
 .nav-logo .logo {
 	padding: 36px 0;
 }
@@ -2547,7 +2558,7 @@ ul, ol {
 	line-height: 26px;
 }
 .contact-text {
-	padding-top: 46px;
+
 	padding-bottom: 89px;
 }
 .contact-text .section-title {
@@ -2797,6 +2808,7 @@ ul, ol {
 	.offcanvas-menu-wrapper .language-bar .language-option .flag-dropdown ul li a:hover {
 		color: #2cbdb8;
 	}
+
 	.offcanvas-menu-wrapper .language-bar .property-btn .property-sub {
 		display: inline-block;
 		background: #2CBDB8;
@@ -2804,6 +2816,7 @@ ul, ol {
 		color: #ffffff;
 		padding: 12px 30px;
 	}
+
 	.offcanvas-menu-wrapper .main-menu {
 		text-align: left;
 	}

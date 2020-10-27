@@ -12,7 +12,7 @@
                         <span style="font-size: 20px;">Register</span>
                         <h2>Start Posting Now</h2>
                     </div>
-                    <form action="/register2/" class="contact-form" method="post"
+                    <form action="/createUser/" class="contact-form" method="post"
                           onsubmit="event.preventDefault(); validateMyForm();" id="registerForm">
                         {% csrf_token %}
                         <label for="email">Email Address</label>
