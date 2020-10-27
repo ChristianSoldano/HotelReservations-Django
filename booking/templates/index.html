@@ -16,10 +16,10 @@
                                         Find Your Home
                                     </div>
                                 </div>
-                                <form action="/formulario/" class="filter-form" method="post">
+                                <form action="/list/" class="filter-form" method="post">
                                     {% csrf_token %}
                                     <div class="first-row">
-                                        <select id="paxs" name="paxs">
+                                        <select id="pax" name="pax">
                                             <option selected="true" value="any">Any Paxs</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -107,7 +107,6 @@
                                         </div>
                                         <button type="submit" class="search-btn">Search</button>
                                     </div>
-
                                 </form>
                             </div>
                         </div>

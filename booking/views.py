@@ -19,16 +19,10 @@ def properties_list(request):
         for key in request.POST:
             if key != 'csrfmiddlewaretoken' and key != 'priceRange':
                 if request.POST[key] != "any":
-                    property_filters[key] = int(request.POST[key])
-
-        # if request.POST["pax"] != "any":
-        #     property_filters["pax"] = int(request.POST["pax"])
-        # if request.POST["rooms"] != "any":
-        #     property_filters["rooms"] = int(request.POST["rooms"])
-        # if request.POST["bathrooms"] != "any":
-        #     property_filters["bathrooms"] = int(request.POST["bathrooms"])
-        # if request.POST["beds"] != "any":
-        #     property_filters["beds"] = int(request.POST["beds"])
+                    if request.POST[key] == 'true':
+                        property_filters[key] = True
+                    else:
+                        property_filters[key + "__gte"] = int(request.POST[key])
 
         price = request.POST["priceRange"].split("-")
 
