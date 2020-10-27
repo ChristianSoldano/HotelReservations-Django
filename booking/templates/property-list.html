@@ -9,9 +9,9 @@
             <div class="col-lg-3">
                 <div class="property-sidebar">
                     <h4>Search Property</h4>
-                    <form action="/formulario/" class="sidebar-search" method="post">
+                    <form action="/list/" class="sidebar-search" method="post">
                         {% csrf_token %}
-                        <select id="paxs" name="paxs">
+                        <select id="pax" name="pax">
                             <option selected="true" value="any">Any Paxs</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
