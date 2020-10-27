@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from booking.models import *
+from dateutil.parser import parse
 
 
 def home_page(request):
@@ -9,30 +10,43 @@ def home_page(request):
 def properties_list(request):
     cities = []
     properties = []
-
+    booking_periods = []
     property_filters = {
         "active": True
     }
 
+    print(request.POST)
+
     if request.method == 'POST':
 
         for key in request.POST:
-            if key != 'csrfmiddlewaretoken' and key != 'priceRange':
+            if key != 'csrfmiddlewaretoken' and key != 'priceRange' and key != "datePickCheckout" and key != "datePickCheckin":
                 if request.POST[key] != "any":
                     if request.POST[key] == 'true':
                         property_filters[key] = True
                     else:
                         property_filters[key + "__gte"] = int(request.POST[key])
+                    if key == "city":
+                        property_filters[key] = City.object.filter(id=request.POST[key])
 
         price = request.POST["priceRange"].split("-")
 
         property_filters["rate__gte"] = price[0]
         property_filters["rate__lte"] = price[1]
 
-        properties = Property.objects.filter(**property_filters)
-    else:
-        cities = City.objects.all()
-        properties = Property.objects.filter(**property_filters)
+        if request.POST['datePickCheckin'] != "":
+            booking_periods = BookingPeriod.objects.filter(start__lte=parse(request.POST['datePickCheckin']), finish__gte=parse(request.POST['datePickCheckout']))
+            for period in booking_periods:
+                v = Property.objects.filter(**property_filters)
+                for v_property in v:
+                    if period.property == v_property:
+                        properties.append(v_property)
+        else:
+            properties = Property.objects.filter(**property_filters)
+
+    print(properties)
+    cities = City.objects.all()
+
 
     return render(request, 'property-list.html', {'properties': properties, 'cities': cities})
 
