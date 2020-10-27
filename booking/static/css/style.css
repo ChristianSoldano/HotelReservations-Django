@@ -44,7 +44,6 @@
   -webkit-line-clamp: 4;
 }
 
-
 html, body {
 	height: 100%;
 	font-family: "Poppins", sans-serif;
@@ -137,7 +136,6 @@ ul, ol {
 	background-position: top center;
 }
 .spad {
-
 	padding-bottom: 100px;
 }
 .spad-2 {
@@ -392,7 +390,7 @@ ul, ol {
 .single-hero-item {
 	padding-top: 125px;
 	height: 750px;
-	
+
 }
 .single-hero-item .hero-text {
 	background: rgba(28, 28, 28, 0.6);
@@ -504,6 +502,20 @@ ul, ol {
 	-webkit-box-shadow: 0 0 42px 5px rgba(44, 44, 44, 0.2);
 	box-shadow: 0 0 42px 5px rgba(44, 44, 44, 0.2);
 }
+
+.reservation-date {
+	clear: none;
+	width: 36%;
+	margin-left: 25px;
+	text-align: center;
+	height: 46px;
+	background: #F2F4F5;
+	border-radius: 0;
+	border: 1px solid #ebebeb;
+	line-height: 46px;
+	margin-bottom: 30px;
+}
+
 .filter-form .first-row .nice-select {
 	clear: none;
 	width: 247px;
@@ -540,6 +552,7 @@ ul, ol {
 	border-radius: 0;
 	margin-top: 0;
 }
+
 .filter-form .second-row .nice-select {
 	clear: none;
 	width: 247px;
@@ -1390,7 +1403,6 @@ ul, ol {
 	font-size: 22px;
 	font-weight: 600;
 	color: #19191a;
-	margin-bottom: 34px;
 }
 .property-sidebar .sidebar-btn {
 	margin-bottom: 30px;
@@ -1794,12 +1806,11 @@ ul, ol {
 	color: #ffffff;
 	background: #2cbdb8;
 }
-
 .pd-details-text .pd-details-tab .tab-content .property-more-table {
 	padding-left: 30px;
 	border: 1px solid #ebebeb;
 	border-top: none;
-    overflow: auto;
+	overflow: auto;
 }
 .pd-details-text .pd-details-tab .tab-content .property-more-table table tbody tr {
 	border-bottom: 1px solid #ebebeb;
@@ -1817,7 +1828,6 @@ ul, ol {
 }
 .pd-details-text .pd-details-tab .tab-content .property-more-table table tbody tr td.p-value {
 	color: #19191a;
-
 }
 .pd-details-text .pd-details-tab .tab-content .property-more-table .left-table {
 	width: 48%;
@@ -1826,7 +1836,6 @@ ul, ol {
 }
 .pd-details-text .pd-details-tab .tab-content .property-more-table .right-table {
 	width: 49%;
-
 }
 .pd-details-text .pd-details-tab .tab-content .pd-table-desc {
 	border: 1px solid #ebebeb;
@@ -2538,12 +2547,9 @@ ul, ol {
 	line-height: 26px;
 }
 .contact-text {
-
+	padding-top: 46px;
 	padding-bottom: 89px;
 }
-
-
-
 .contact-text .section-title {
 	text-align: left;
 	margin-bottom: 50px;
@@ -2892,7 +2898,7 @@ ul, ol {
 		padding-top: 20px;
 	}
 	.property-details-section .property-sidebar {
-		padding-top: 30px;
+
 	}
 	.top-properties-carousel .single-top-properties .stp-text {
 		padding-left: 0;

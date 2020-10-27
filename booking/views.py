@@ -2,8 +2,6 @@ from django.shortcuts import render, redirect
 from booking.models import *
 
 
-# Create your views here.
-
 def home_page(request):
     return render(request, 'index.html')
 
@@ -41,3 +39,7 @@ def do_a_booking(request):
         booking.save()
 
     return redirect('booking:properties_list', request)  # No se si va
+
+
+def register(request):
+    return render(request, 'register.html')
