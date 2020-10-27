@@ -8,6 +8,59 @@
 ---------------------------------------------------------  */
 
 'use strict';
+
+const NAME_REGEX = /^[a-zA-Z\s]{1,150}$/
+const USERNAME_REGEX = /^[a-zA-Z0-9]{1,150}$/
+const DNI_REGEX = /^[0-9]{7,8}$/
+const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,128}$/
+
+let formValidated = true;
+
+const fields = {
+    "firstname": NAME_REGEX,
+    "lastname": NAME_REGEX,
+    "email": EMAIL_REGEX,
+    "password": PWD_REGEX,
+    "username": USERNAME_REGEX,
+    "dni": DNI_REGEX,
+
+}
+var validationPoints = 0;
+
+function validate() {
+    validationPoints = 0;
+    for (let key in fields) {
+        const element = document.getElementById(key)
+        if (isValid(element, fields[key])){
+            element.style.borderColor = "green"
+            validationPoints++;
+            console.log(validationPoints);
+            }
+        else{
+            element.style.borderColor = "red"
+            validationPoints--;
+            console.log(validationPoints);
+    }}
+}
+
+function isValid(element, regex) {
+    if (regex.exec(element.value) != null)
+        return true
+    return false;
+}
+
+
+function validateMyForm()
+{
+  if(validationPoints < 6)
+  {
+    return false;
+  }
+  document.getElementById("registerForm").submit();
+  return true;
+}
+
 (function ($) {
 
     /*------------------

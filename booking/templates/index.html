@@ -69,6 +69,16 @@
                                             <option value="10">10</option>
                                         </select>
                                     </div>
+                                    <div class="first-row">
+                                        <input class="reservation-date" id="datePickCheckin"
+                                               placeholder="dd/mm/aaaa"/>
+                                        <input class="reservation-date" id="datePickCheckout"
+                                               placeholder="dd/mm/aaaa"/>
+                                        <select id="city" name="city">
+                                            <option selected="true" value="any">Any City</option>
+
+                                        </select>
+                                    </div>
                                     <div class="second-row">
                                         <div class="price-range-wrap">
                                             <div class="price-text">
@@ -97,6 +107,7 @@
                                         </div>
                                         <button type="submit" class="search-btn">Search</button>
                                     </div>
+
                                 </form>
                             </div>
                         </div>
@@ -143,4 +154,25 @@
         </div>
     </div>
 </section>
+
+<script>
+     var midatepicker2 = $('#datePickCheckout').datepicker({
+        format: "dd-mm-yyyy",
+        autoclose: true,
+    });
+
+    midatepicker2.prop('disabled', true);
+
+    $('#datePickCheckin').datepicker({
+        format: "dd-mm-yyyy",
+        startDate: "today",
+        autoclose: true,
+
+    }).change(function () {
+        midatepicker2.datepicker('setStartDate', $(this).val());
+        midatepicker2.datepicker('setDate', $(this).val());
+        midatepicker2.prop('disabled', false);
+    });
+
+</script>
 {% endblock %}
