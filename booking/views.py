@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from booking.models import *
+from dateutil.parser import parse
 
 
 def home_page(request):
@@ -10,7 +11,7 @@ def home_page(request):
 def properties_list(request):
     cities = []
     properties = []
-
+    booking_periods = []
     property_filters = {
         "active": True
     }
@@ -23,21 +24,28 @@ def properties_list(request):
                     if request.POST[key] == 'true':
                         property_filters[key] = True
                     else:
-                        if key == "city":
-                            c = City.objects.filter(id=request.POST[key])
-                            print(c)
-                            property_filters[key] = c[0]
-                           # print(property_filters[key])
-                        else:
-                            property_filters[key + "__gte"] = int(request.POST[key])
+                        property_filters[key + "__gte"] = int(request.POST[key])
+                    if key == "city":
+                        property_filters[key] = City.object.filter(id=request.POST[key])[0]
 
         price = request.POST["priceRange"].split("-")
 
         property_filters["rate__gte"] = price[0]
         property_filters["rate__lte"] = price[1]
 
+        if request.POST['datePickCheckin'] != "":
+            booking_periods = BookingPeriod.objects.filter(start__lte=parse(request.POST['datePickCheckin']), finish__gte=parse(request.POST['datePickCheckout']))
+            for period in booking_periods:
+                v = Property.objects.filter(**property_filters)
+                for v_property in v:
+                    if period.property == v_property:
+                        properties.append(v_property)
+        else:
+            properties = Property.objects.filter(**property_filters)
+
+    print(properties)
     cities = City.objects.all()
-    properties = Property.objects.filter(**property_filters)
+
 
     return render(request, 'property-list.html', {'properties': properties, 'cities': cities})
 
