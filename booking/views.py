@@ -12,11 +12,14 @@ def properties_list(request):
     cities = []
     properties = []
 
+
     if request.method == 'POST':
         property_filters = {
             "active": True
         }
-
+        
+        if request.POST["paxs"] != "any":
+            property_filters["pax"] = int(request.POST["paxs"])
         if request.POST["rooms"] != "any":
             property_filters["rooms"] = int(request.POST["rooms"])
         if request.POST["bathrooms"] != "any":
