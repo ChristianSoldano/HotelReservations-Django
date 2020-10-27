@@ -2,7 +2,8 @@
 
 Dependencies:
 - Django `pip install django`
-- Pymsql `pip install pymysql`
+- Pillow `pip install pillow`
+- DateUtil `pip install python-dateutil`
 
 
 
