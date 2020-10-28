@@ -2,9 +2,25 @@
 {% load static %}
 
 {% block content %}
-
 <section class="spad">
     <div class="container">
+
+
+        {% if errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Ups! something went wrong: </strong><br>
+            <ul class="ml-5">
+                {% for error in errors%}
+                <li>{{error}}</li>
+                {% endfor%}
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif%}
+
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="contact-text">

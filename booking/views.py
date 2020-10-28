@@ -104,8 +104,20 @@ def register_view(request):
 
 
 def register(request):
+    errors = []
+
     if request.method == 'POST':
-        # user = User.objects.create_user().save()
+        if User.objects.filter(email=request.POST["email"]).exists():
+            errors.append("The email is already in use")
+
+        if User.objects.filter(username=request.POST["username"]).exists():
+            errors.append("The username is already in use")
+
+        if Host.objects.filter(dni=request.POST["dni"]).exists():
+            errors.append("The dni is already in use")
+
+        if errors:
+            return render(request, "register.html", {"errors": errors})
 
         host = Host(email=request.POST["email"],
                     username=request.POST["username"],
