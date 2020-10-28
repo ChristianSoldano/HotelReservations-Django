@@ -66,6 +66,10 @@
                             <option value="{{city.id}}">{{city.name}}</option>
                             {% endfor %}
                         </select>
+                        <input class="dates-property-list" id="datePickCheckin" name="datePickCheckin"
+                               placeholder="dd/mm/aaaa"/>
+                        <input class="dates-property-list" id="datePickCheckout" name="datePickCheckout"
+                               placeholder="dd/mm/aaaa"/>
                         <div class="price-range-wrap">
                             <div class="price-text">
                                 <label for="priceRange">Price:</label>
@@ -98,84 +102,85 @@
                 <h4 class="property-title">Properties</h4>
                 <div class="property-list">
                     {% for property in properties %}
-
-                    <div class="single-property-item">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="property-pic">
-                                    <img src="{% static 'img/properties/property-1.jpg' %}" alt="">
+                    <a href="{% url 'property_details' id_property=property.id %}">
+                        <div class="single-property-item">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="property-pic">
+                                        <img src="{% static property.thumbnail %}" alt="">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="property-text">
+                                <div class="col-md-8">
+                                    <div class="property-text">
 
-                                    <h5 class="r-title">{{ property.title }}</h5>
-                                    <div class="room-price">
-                                        <span>Night Price:</span>
-                                        <h5>${{ property.rate }}</h5>
+                                        <h5 class="r-title">{{ property.title }}</h5>
+                                        <div class="room-price">
+                                            <span>Night Price:</span>
+                                            <h5>${{ property.rate }}</h5>
+                                        </div>
+                                        <div class="properties-location"><i class="icon_pin"></i>
+                                            <b>{{property.city.name}}</b>, {{ property.address }}
+                                        </div>
+                                        <p class="property-description">{{ property.description }}</p>
+                                        <ul class="room-features">
+                                            <li>
+                                                <i class="fa fa-users"></i>
+                                                <p>{{ property.pax }}</p>
+                                            </li>
+
+                                            <li>
+                                                <i class="fa fa-bed"></i>
+                                                <p>{{ property.beds }} Beds</p>
+                                            </li>
+
+                                            <li>
+                                                <i class="fa fa-bath"></i>
+                                                <p>{{ property.bathrooms }} Baths</p>
+                                            </li>
+
+                                            {% if property.garage %}
+                                            <li>
+                                                <i class="fa fa-car"></i>
+                                                <p>Garage</p>
+                                            </li>
+                                            {% endif %}
+
+                                            {% if property.pets %}
+                                            <li>
+                                                <i class="fa fa-paw"></i>
+                                                <p>Pets</p>
+                                            </li>
+                                            {% endif %}
+
+                                            {% if property.wifi %}
+                                            <li>
+                                                <i class="fa fa-wifi"></i>
+                                                <p>Wifi</p>
+                                            </li>
+                                            {% endif %}
+
+                                            {% if property.pool %}
+                                            <li>
+                                                <i class="fa fa-tint"></i>
+                                                <p>Pool</p>
+                                            </li>
+                                            {% endif %}
+
+
+                                            {% if property.kitchen %}
+                                            <li>
+                                                <i class="fa fa-cutlery"></i>
+                                                <p>Kitchen</p>
+                                            </li>
+                                            {% endif %}
+
+                                        </ul>
                                     </div>
-                                    <div class="properties-location"><i class="icon_pin"></i>
-                                        <b>{{property.city.name}}</b>, {{ property.address }}
-                                    </div>
-                                    <p class="property-description">{{ property.description }}</p>
-                                    <ul class="room-features">
-                                        <li>
-                                            <i class="fa fa-users"></i>
-                                            <p>{{ property.pax }}</p>
-                                        </li>
-
-                                        <li>
-                                            <i class="fa fa-bed"></i>
-                                            <p>{{ property.beds }} Beds</p>
-                                        </li>
-
-                                        <li>
-                                            <i class="fa fa-bath"></i>
-                                            <p>{{ property.bathrooms }} Baths</p>
-                                        </li>
-
-                                        {% if property.garage %}
-                                        <li>
-                                            <i class="fa fa-car"></i>
-                                            <p>Garage</p>
-                                        </li>
-                                        {% endif %}
-
-                                        {% if property.pets %}
-                                        <li>
-                                            <i class="fa fa-paw"></i>
-                                            <p>Pets</p>
-                                        </li>
-                                        {% endif %}
-
-                                        {% if property.wifi %}
-                                        <li>
-                                            <i class="fa fa-wifi"></i>
-                                            <p>Wifi</p>
-                                        </li>
-                                        {% endif %}
-
-                                        {% if property.pool %}
-                                        <li>
-                                            <i class="fa fa-tint"></i>
-                                            <p>Pool</p>
-                                        </li>
-                                        {% endif %}
-
-
-                                        {% if property.kitchen %}
-                                        <li>
-                                            <i class="fa fa-cutlery"></i>
-                                            <p>Kitchen</p>
-                                        </li>
-                                        {% endif %}
-
-                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    </a>
+                    <hr class="mb-5 mt-5">
                     {% endfor %}
 
                 </div>
@@ -189,4 +194,26 @@
     </div>
 </section>
 
+<script>
+     var midatepicker2 = $('#datePickCheckout').datepicker({
+        format: "dd-mm-yyyy",
+        autoclose: true,
+    });
+
+    midatepicker2.prop('disabled', true);
+
+    $('#datePickCheckin').datepicker({
+        format: "dd-mm-yyyy",
+        startDate: "today",
+        autoclose: true,
+
+    }).change(function () {
+        midatepicker2.datepicker('setStartDate', $(this).val());
+        midatepicker2.datepicker('setDate', $(this).val());
+        midatepicker2.prop('disabled', false);
+    });
+
+
+
+</script>
 {% endblock %}

@@ -32,6 +32,21 @@
 /* Template default CSS
 /*----------------------------------------*/
 
+
+.dates-property-list{
+	width: 100%;
+	height: 50px;
+	border: 1px solid #ebebeb;
+	padding-left: 20px;
+	font-size: 16px;
+	color: #aaaab3;
+	margin-bottom: 20px;
+	-webkit-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+	background: #F2F4F5;
+}
+
 .property-description {
   overflow:hidden;
   line-height: 2rem;

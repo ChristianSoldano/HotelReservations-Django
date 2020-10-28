@@ -43,6 +43,8 @@ class Property(models.Model):
     active = models.BooleanField(default=True, null=False)
     created_at = models.DateField(auto_now=True, blank=False, null=False)
     updated_at = models.DateField(auto_now=True, blank=False, null=False)
+    thumbnail = models.ImageField(null=False, upload_to="booking/static/img/properties",
+                                  default="img/image-not-found.png")
 
     class Meta:
         verbose_name_plural = "Properties"

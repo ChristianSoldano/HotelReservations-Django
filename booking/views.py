@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect
 from booking.models import *
-from dateutil.parser import parse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import Group
+import datetime
+from django.db.models import Q
 
 
 def home_page(request):
     cities = []
     cities = City.objects.all()
-    return render(request, 'index.html',{'cities': cities})
+    return render(request, 'index.html', {'cities': cities})
+
 
 def properties_list(request):
     cities = []
@@ -19,7 +21,6 @@ def properties_list(request):
     }
 
     if request.method == 'POST':
-
         for key in request.POST:
             if key != 'csrfmiddlewaretoken' and key != 'priceRange' and key != "datePickCheckout" and key != "datePickCheckin":
                 if request.POST[key] != "any":
@@ -28,7 +29,7 @@ def properties_list(request):
                     else:
                         property_filters[key + "__gte"] = int(request.POST[key])
                     if key == "city":
-                            property_filters[key] = City.objects.filter(id=request.POST[key])[0]
+                        property_filters[key] = City.objects.filter(id=request.POST[key])[0]
 
         price = request.POST["priceRange"].split("-")
 
@@ -36,18 +37,36 @@ def properties_list(request):
         property_filters["rate__lte"] = price[1]
 
         if request.POST['datePickCheckin'] != "":
-            booking_periods = BookingPeriod.objects.filter(start__lte=parse(request.POST['datePickCheckin']), finish__gte=parse(request.POST['datePickCheckout']))
+            booking_periods = BookingPeriod.objects.filter(
+                start__lte=datetime.datetime.strptime(request.POST['datePickCheckin'], '%d-%m-%Y').date(),
+                finish__gte=datetime.datetime.strptime(request.POST['datePickCheckout'], '%d-%m-%Y').date())
             for period in booking_periods:
-                v = Property.objects.filter(**property_filters)
-                for v_property in v:
-                    if period.property == v_property:
-                        properties.append(v_property)
+                checkin = datetime.datetime.strptime(request.POST['datePickCheckin'], '%d-%m-%Y').date()
+                checkout = datetime.datetime.strptime(request.POST['datePickCheckout'], '%d-%m-%Y').date()
+                variable = Booking.objects.filter(checkin__range=(checkin, checkout),
+                                                  checkout__range=(checkin, checkout))
+
+                print(checkin)
+                print(checkout)
+                print(variable)
+                if not Booking.objects.filter(
+                        Q(checkin__range=(checkin, checkout)) | Q(checkout__range=(checkin, checkout))).exists():
+                    v = Property.objects.filter(**property_filters)
+                    for v_property in v:
+                        if period.property == v_property:
+                            properties.append(v_property)
+                else:
+                    print("NO PAPU")
+                    # return redirect("index")
         else:
             properties = Property.objects.filter(**property_filters)
+    else:
+        properties = Property.objects.filter(**property_filters)
 
-    print(properties)
     cities = City.objects.all()
 
+    for p in properties:
+        p.thumbnail = (str(p.thumbnail).replace("booking/static/", ""))
 
     return render(request, 'property-list.html', {'properties': properties, 'cities': cities})
 
@@ -77,7 +96,7 @@ def do_a_booking(request):
             last_name=request.POST['last_name'])
         booking.save()
 
-    return redirect('booking:properties_list', request)  # No se si va
+    return redirect('booking:properties_list', request)
 
 
 def register_view(request):
