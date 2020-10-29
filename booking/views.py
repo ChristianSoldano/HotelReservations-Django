@@ -44,21 +44,13 @@ def properties_list(request):
             for period in booking_periods:
                 checkin = datetime.datetime.strptime(request.POST['datePickCheckin'], '%d-%m-%Y').date()
                 checkout = datetime.datetime.strptime(request.POST['datePickCheckout'], '%d-%m-%Y').date()
-                variable = Booking.objects.filter(checkin__range=(checkin, checkout),
-                                                  checkout__range=(checkin, checkout))
 
-                print(checkin)
-                print(checkout)
-                print(variable)
                 if not Booking.objects.filter(
                         Q(checkin__range=(checkin, checkout)) | Q(checkout__range=(checkin, checkout))).exists():
                     v = Property.objects.filter(**property_filters)
                     for v_property in v:
                         if period.property == v_property:
                             properties.append(v_property)
-                else:
-                    print("NO PAPU")
-                    # return redirect("index")
         else:
             properties = Property.objects.filter(**property_filters)
     else:
@@ -76,18 +68,24 @@ def property_detail(request, id_property):
     v_property = Property.objects.get(id=id_property)
     images = Image.objects.filter(property__id=id_property)
     # format dd-mm-yyyy
+    available_dates = []
+    reserved_periods = []
     reserved_dates = []
     final_dates = []
 
     periods = BookingPeriod.objects.filter(property=v_property)
+    reserved_periods = Booking.objects.filter(property=v_property)
 
     for period in periods:
-        reserved_dates += pandas.date_range(start=period.start, end=period.finish, freq='d')
+        available_dates += pandas.date_range(start=period.start, end=period.finish, freq='d')
 
-    for d in reserved_dates:
-        final_dates.append(datetime.datetime.strptime(str(d.date()), '%Y-%m-%d').strftime('%d-%m-%Y'))
+    for rd in reserved_periods:
+        reserved_dates += pandas.date_range(start=rd.checkin, end=rd.checkout, freq='d')
 
-    print(final_dates)
+    available_dates = list(set(available_dates) - set(reserved_dates))
+
+    for d in available_dates:
+        final_dates.append(datetime.datetime.strptime(str(d.date()), '%Y-%m-%d').strftime('%#d-%m-%Y'))
 
     v_property.thumbnail = (str(v_property.thumbnail).replace("booking/static/", ""))
 
@@ -95,7 +93,7 @@ def property_detail(request, id_property):
         image.image = (str(image.image).replace("booking/static/", ""))
 
     return render(request, 'property-details.html',
-                  {'property': v_property, 'reserved_dates': reserved_dates, 'images': images})
+                  {'property': v_property, 'reserved_dates': final_dates, 'images': images})
 
 
 def do_a_booking(request):
@@ -117,7 +115,7 @@ def do_a_booking(request):
             last_name=request.POST['lastname'])
         booking.save()
 
-    return render(request, "properties_list.html")
+    return render(request, "property-list.html")
 
 
 def register_view(request):
