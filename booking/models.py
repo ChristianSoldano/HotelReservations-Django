@@ -52,7 +52,7 @@ class Property(models.Model):
 
 
 class Image(models.Model):
-    image = models.ImageField(null=False)
+    image = models.ImageField(null=False, upload_to="booking/static/img/properties")
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
 
     class Meta:

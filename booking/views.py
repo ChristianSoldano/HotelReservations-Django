@@ -73,9 +73,16 @@ def properties_list(request):
 
 def property_detail(request, id_property):
     obj = Property.objects.get(id=id_property)
+    images = Image.objects.filter(property__id=id_property)
     # format dd-mm-yyyy
     reserved_dates = ["24-10-2020", "25-10-2020", "28-10-2020", "29-10-2020", "30-10-2020"]
-    return render(request, 'property-details.html', {'property': obj, 'reserved_dates': reserved_dates})
+    obj.thumbnail = (str(obj.thumbnail).replace("booking/static/", ""))
+
+    for image in images:
+        image.image = (str(image.image).replace("booking/static/", ""))
+
+    return render(request, 'property-details.html',
+                  {'property': obj, 'reserved_dates': reserved_dates, 'images': images})
 
 
 def do_a_booking(request):

@@ -12,22 +12,17 @@
                     </h3>
                     <div class="property-more-pic">
                         <div class="product-pic-zoom">
-                            <img class="product-big-img" src="{% static 'img/properties/property-details-b1.jpg' %}"
+                            <img class="product-big-img" src="{% static property.thumbnail %}"
                                  alt="">
                         </div>
                         <div class="product-thumbs">
                             <div class="product-thumbs-track ps-slider owl-carousel">
-                                <div class="pt" data-imgbigurl="{% static 'img/properties/property-details-b2.jpg' %}">
-                                    <img src="{% static 'img/properties/thumb-1.jpg' %}" alt=""></div>
-                                <div class="pt active"
-                                     data-imgbigurl="{% static 'img/properties/property-details-b1.jpg' %}"><img
-                                        src="{% static 'img/properties/thumb-2.jpg' %}" alt=""></div>
-                                <div class="pt" data-imgbigurl="{% static 'img/properties/property-details-b3.jpg' %}">
-                                    <img src="{% static 'img/properties/thumb-3.jpg' %}" alt=""></div>
-                                <div class="pt" data-imgbigurl="{% static 'img/properties/property-details-b4.jpg' %}">
-                                    <img src="{% static 'img/properties/thumb-4.jpg' %}" alt=""></div>
-                                <div class="pt" data-imgbigurl="{% static 'img/properties/property-details-b5.jpg' %}">
-                                    <img src="{% static 'img/properties/thumb-5.jpg' %}" alt=""></div>
+                                <div class="pt" data-imgbigurl="{% static property.thumbnail %}">
+                                    <img src="{% static property.thumbnail %}" alt=""></div>
+                                {% for image in images %}
+                                <div class="pt" data-imgbigurl="{% static image.image %}">
+                                    <img src="{% static image.image %}" alt=""></div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -226,6 +221,10 @@
         }
         return period;
     }
+
+
+
+
 
 </script>
 {% endblock %}
