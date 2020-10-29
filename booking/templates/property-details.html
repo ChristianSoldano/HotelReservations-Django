@@ -12,16 +12,16 @@
                     </h3>
                     <div class="property-more-pic">
                         <div class="product-pic-zoom">
-                            <img class="product-big-img" src="{% static property.thumbnail %}"
+                            <img class="product-big-img" src="{% static property.thumbnail.url %}"
                                  alt="">
                         </div>
                         <div class="product-thumbs">
                             <div class="product-thumbs-track ps-slider owl-carousel">
-                                <div class="pt" data-imgbigurl="{% static property.thumbnail %}">
-                                    <img src="{% static property.thumbnail %}" alt=""></div>
+                                <div class="pt" data-imgbigurl="{% static property.thumbnail.url %}">
+                                    <img src="{% static property.thumbnail.url %}" alt=""></div>
                                 {% for image in images %}
-                                <div class="pt" data-imgbigurl="{% static image.image %}">
-                                    <img src="{% static image.image %}" alt=""></div>
+                                <div class="pt" data-imgbigurl="{% static image.image.url %}">
+                                    <img src="{% static image.image.url %}" alt=""></div>
                                 {% endfor %}
                             </div>
                         </div>
