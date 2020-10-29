@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import Group
 import datetime
 from django.db.models import Q
+import pandas
 
 
 def home_page(request):
@@ -72,39 +73,51 @@ def properties_list(request):
 
 
 def property_detail(request, id_property):
-    obj = Property.objects.get(id=id_property)
+    v_property = Property.objects.get(id=id_property)
     images = Image.objects.filter(property__id=id_property)
     # format dd-mm-yyyy
-    reserved_dates = ["24-10-2020", "25-10-2020", "28-10-2020", "29-10-2020", "30-10-2020"]
+    reserved_dates = []
+    final_dates = []
 
-    obj.thumbnail = (str(obj.thumbnail).replace("booking/static/", ""))
+    periods = BookingPeriod.objects.filter(property=v_property)
+
+    for period in periods:
+        reserved_dates += pandas.date_range(start=period.start, end=period.finish, freq='d')
+
+    for d in reserved_dates:
+        final_dates.append(datetime.datetime.strptime(str(d.date()), '%Y-%m-%d').strftime('%d-%m-%Y'))
+
+    print(final_dates)
+
+    v_property.thumbnail = (str(v_property.thumbnail).replace("booking/static/", ""))
 
     for image in images:
         image.image = (str(image.image).replace("booking/static/", ""))
 
     return render(request, 'property-details.html',
-                  {'property': obj, 'reserved_dates': reserved_dates, 'images': images})
+                  {'property': v_property, 'reserved_dates': reserved_dates, 'images': images})
 
 
 def do_a_booking(request):
     property_to_rent = Property.objects.get(id=request.POST['idProperty'])
-    period = BookingPeriod.objects.filter(start__lte=request.POST['checkin'],
-                                          finish__gte=request.POST['checkout'], property=property_to_rent)
-    # Testear y ver de usar el distinct en caso de que el exclude no sirva
-    if Booking.objects.filter(checkin__range=(period.start, period.finish),
-                              checkout__range=(period.start, period.finish)).exists():
-        print("No se puede hacer la reserva")
-    else:
+    start_date = datetime.datetime.strptime(request.POST['datePickCheckin'], '%d-%m-%Y').date()
+    finish_date = datetime.datetime.strptime(request.POST['datePickCheckout'], '%d-%m-%Y').date()
+
+    period = BookingPeriod.objects.filter(start__lte=start_date,
+                                          finish__gte=finish_date, property=property_to_rent).first()
+
+    if not Booking.objects.filter(checkin__range=(period.start, period.finish),
+                                  checkout__range=(period.start, period.finish)).exists():
         booking = Booking(
             property=property_to_rent,
-            checkin=request.POST['checkin'],
-            checkout=request.POST['checkout'],
+            checkin=start_date,
+            checkout=finish_date,
             email=request.POST['email'],
-            first_name=request.POST['first_name'],
-            last_name=request.POST['last_name'])
+            first_name=request.POST['firstname'],
+            last_name=request.POST['lastname'])
         booking.save()
 
-    return redirect('booking:properties_list', request)
+    return render(request, "properties_list.html")
 
 
 def register_view(request):
