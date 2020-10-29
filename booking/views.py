@@ -5,12 +5,15 @@ from django.contrib.auth.models import Group
 import datetime
 from django.db.models import Q
 import pandas
+from django.urls import reverse
+from urllib.parse import urlencode
 
 
 def home_page(request):
     cities = []
     cities = City.objects.all()
-    return render(request, 'index.html', {'cities': cities})
+    msg = request.GET.get('msg')  # 5
+    return render(request, 'index.html', {'cities': cities, 'msg': msg})
 
 
 def properties_list(request):
@@ -84,6 +87,8 @@ def property_detail(request, id_property):
 
     available_dates = list(set(available_dates) - set(reserved_dates))
 
+    available_dates.sort()
+
     for d in available_dates:
         final_dates.append(datetime.datetime.strptime(str(d.date()), '%Y-%m-%d').strftime('%#d-%m-%Y'))
 
@@ -104,8 +109,11 @@ def do_a_booking(request):
     period = BookingPeriod.objects.filter(start__lte=start_date,
                                           finish__gte=finish_date, property=property_to_rent).first()
 
-    if not Booking.objects.filter(checkin__range=(period.start, period.finish),
-                                  checkout__range=(period.start, period.finish)).exists():
+    bookings = Booking.objects.filter(checkin__range=(period.start, period.finish),
+                                      checkout__range=(period.start, period.finish))
+
+    if not Booking.objects.filter(checkin__range=(start_date, finish_date),
+                                  checkout__range=(start_date, finish_date)).exists():
         booking = Booking(
             property=property_to_rent,
             checkin=start_date,
@@ -115,7 +123,10 @@ def do_a_booking(request):
             last_name=request.POST['lastname'])
         booking.save()
 
-    return render(request, "property-list.html")
+    base_url = reverse('index')  # 1 /products/
+    query_string = urlencode({'msg': True})  # 2 category=42
+    url = '{}?{}'.format(base_url, query_string)  # 3 /products/?category=42
+    return redirect(url)  # 4
 
 
 def register_view(request):

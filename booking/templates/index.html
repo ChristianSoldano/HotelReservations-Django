@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block imports %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% endblock%}
+
 {% block content %}
 <section class="hero-section">
     <div class="single-hero-item set-bg" data-setbg="{% static 'img/hero/hero-1.jpg' %}">
@@ -174,6 +179,11 @@
         midatepicker2.datepicker('setDate', $(this).val());
         midatepicker2.prop('disabled', false);
     });
+
+
+{% if msg%}
+    swal("All done!", "The Bookin was successful!", "success");
+{% endif%}
 
 </script>
 {% endblock %}

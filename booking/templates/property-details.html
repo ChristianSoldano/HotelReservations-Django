@@ -12,8 +12,7 @@
                     </h3>
                     <div class="property-more-pic">
                         <div class="product-pic-zoom">
-                            <img class="product-big-img" src="{% static property.thumbnail.url %}"
-                                 alt="">
+                            <img class="product-big-img" src="{% static property.thumbnail.url %}" alt="">
                         </div>
                         <div class="product-thumbs">
                             <div class="product-thumbs-track ps-slider owl-carousel">
@@ -45,88 +44,88 @@
                                     <div class="property-more-table">
                                         <table class="left-table">
                                             <tbody>
-                                            <tr>
-                                                <td class="pt-name">Night Price</td>
-                                                <td class="p-value">$ {{property.rate}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pt-name">City</td>
-                                                <td class="p-value">{{property.city.name}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pt-name">Address</td>
-                                                <td class="p-value overview-description">{{property.address}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pt-name">Pax</td>
-                                                <td class="p-value">{{property.pax}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pt-name">Rooms</td>
-                                                <td class="p-value">{{property.rooms}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pt-name">Beds</td>
-                                                <td class="p-value">{{property.beds}}</td>
-                                            </tr>
+                                                <tr>
+                                                    <td class="pt-name">Night Price</td>
+                                                    <td class="p-value">$ {{property.rate}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pt-name">City</td>
+                                                    <td class="p-value">{{property.city.name}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pt-name">Address</td>
+                                                    <td class="p-value overview-description">{{property.address}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pt-name">Pax</td>
+                                                    <td class="p-value">{{property.pax}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pt-name">Rooms</td>
+                                                    <td class="p-value">{{property.rooms}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pt-name">Beds</td>
+                                                    <td class="p-value">{{property.beds}}</td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                         <table class="right-table">
                                             <tbody>
-                                            <tr>
-                                                <td class="pt-name">Bathrooms</td>
-                                                <td class="p-value">{{property.bathrooms}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pt-name">Garage</td>
-                                                <td class="p-value">
-                                                    {% if property.garage %}
-                                                    Yes
-                                                    {% else %}
-                                                    No
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pt-name">Pets</td>
-                                                <td class="p-value">
-                                                    {% if property.pets %}
-                                                    Yes
-                                                    {% else %}
-                                                    No
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pt-name">Wifi</td>
-                                                <td class="p-value">
-                                                    {% if property.wifi %}
-                                                    Yes
-                                                    {% else %}
-                                                    No
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pt-name">Pool</td>
-                                                <td class="p-value">
-                                                    {% if property.pool %}
-                                                    Yes
-                                                    {% else %}
-                                                    No
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pt-name">Kitchen</td>
-                                                <td class="p-value">
-                                                    {% if property.garage %}
-                                                    Yes
-                                                    {% else %}
-                                                    No
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
+                                                <tr>
+                                                    <td class="pt-name">Bathrooms</td>
+                                                    <td class="p-value">{{property.bathrooms}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pt-name">Garage</td>
+                                                    <td class="p-value">
+                                                        {% if property.garage %}
+                                                        Yes
+                                                        {% else %}
+                                                        No
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pt-name">Pets</td>
+                                                    <td class="p-value">
+                                                        {% if property.pets %}
+                                                        Yes
+                                                        {% else %}
+                                                        No
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pt-name">Wifi</td>
+                                                    <td class="p-value">
+                                                        {% if property.wifi %}
+                                                        Yes
+                                                        {% else %}
+                                                        No
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pt-name">Pool</td>
+                                                    <td class="p-value">
+                                                        {% if property.pool %}
+                                                        Yes
+                                                        {% else %}
+                                                        No
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="pt-name">Kitchen</td>
+                                                    <td class="p-value">
+                                                        {% if property.garage %}
+                                                        Yes
+                                                        {% else %}
+                                                        No
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
 
                                             </tbody>
                                         </table>
@@ -143,19 +142,26 @@
                     <div class="contact-text">
                         <form action="/doABooking/" class="contact-form" id="reserve-form" method="post">
                             {% csrf_token %}
+                            <input id="idProperty" name="idProperty" type="hidden" value="{{property.id}}" />
                             <input type="text" placeholder="First Name" name="firstname" id="firstname">
                             <input type="text" placeholder="Last Name" name="lastname" id="lastname">
                             <input type="email" placeholder="Email" name="email" id="email">
 
                             <label for="datePickCheckin">Check-In:</label>
-                            <input id="datePickCheckin" name="datePickCheckin" placeholder="dd/mm/aaaa"/>
+                            <input id="datePickCheckin" name="datePickCheckin" placeholder="dd/mm/aaaa" />
 
                             <label for="datePickCheckout">Check-Out:</label>
-                            <input id="datePickCheckout" name="datePickCheckout" placeholder="dd/mm/aaaa"/>
+                            <input id="datePickCheckout" name="datePickCheckout" placeholder="dd/mm/aaaa" />
 
-                            <input id="idProperty" name="idProperty" type="hidden" value="{{property.id}}" />
-
-                            <button type="submit" class="site-btn">Reserve</button>
+                            <div id="totalPriceDiv" class="mt-4">
+                                <span id="pricePerNight"></span> x <span id="nights"></span>
+                                <span class="pull-right" id="subTotal"></span>
+                                <hr>
+                                Service tax: <span class="pull-right" id="serviceTax"></span>
+                                <hr>
+                                <b>Total:</b><b class="pull-right" id="total">$15254</b>
+                            </div>
+                            <button type="submit" class="site-btn mt-4">Reserve</button>
                         </form>
                     </div>
                 </div>
@@ -173,11 +179,13 @@
     var midatepicker2 = $('#datePickCheckout').datepicker({
         format: "dd-mm-yyyy",
         autoclose: true,
+    }).change(function () {
+        showTotalPriceDiv(midatepicker.val(), $(this).val())
     });
 
     midatepicker2.prop('disabled', true);
 
-    $('#datePickCheckin').datepicker({
+    var midatepicker = $('#datePickCheckin').datepicker({
         format: "dd-mm-yyyy",
         startDate: "today",
         autoclose: true,
@@ -185,18 +193,19 @@
             var dt_ddmmyyyy = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
             return (onlyThisDates.indexOf(dt_ddmmyyyy) != -1);
         }
-
     }).change(function () {
         selectedCheckinDate = $(this).val();
         onlyThisDates2 = setPeriodDates();
         var startDate = onlyThisDates2[0];
         var endDate = onlyThisDates2.pop();
+
         midatepicker2.datepicker('setStartDate', startDate);
         midatepicker2.datepicker('setEndDate', endDate);
-    midatepicker2.prop('disabled', false);
+        midatepicker2.datepicker('setDate', $(this).val());
+
+        midatepicker2.prop('disabled', false);
     });
-
-
+    
     function setPeriodDates() {
         let dateSplited = selectedCheckinDate.split("-");
         let day = Number(dateSplited[0]);
@@ -204,6 +213,7 @@
         let year = dateSplited[2];
         var i = onlyThisDates.indexOf(day + "-" + month + "-" + year) + 1;
         var dateParts = selectedCheckinDate.split("-");
+
         var aux = new Date(dateParts[2] < 10 ? "0" + dateParts[2] : dateParts[2], dateParts[1] - 1, +dateParts[0]);
         var period = [selectedCheckinDate];
 
@@ -225,9 +235,37 @@
         return period;
     }
 
+    document.getElementById("totalPriceDiv").style.display = "none";
 
+    function showTotalPriceDiv(checkin, checkout) {
 
+        const splittedCheckin = checkin.split("-");
+        const splittedCheckout = checkout.split("-");
 
+        const finalCheckin = new Date(splittedCheckin[2] + "-" + splittedCheckin[1] + "-" + splittedCheckin[0]);
+        const finalCheckout = new Date(splittedCheckout[2] + "-" + splittedCheckout[1] + "-" + splittedCheckout[0]);
+
+        var differenceInTime = finalCheckout.getTime() - finalCheckin.getTime();
+        var differenceInDays = differenceInTime / (1000 * 3600 * 24) + 1;
+
+        var pricePerNight = {{ property.rate }}
+
+        var subTotal = pricePerNight * differenceInDays;
+        var serviceTax = subTotal * 0.08;
+        var total = subTotal + serviceTax;
+
+        document.getElementById("pricePerNight").innerHTML = "$" + pricePerNight;
+        document.getElementById("nights").innerHTML = differenceInDays;
+        document.getElementById("subTotal").innerHTML = "$" + subTotal;
+        document.getElementById("serviceTax").innerHTML = "$" + serviceTax;
+        document.getElementById("total").innerHTML = "$" + total;
+
+        document.getElementById("totalPriceDiv").style.display = "block";
+};
 
 </script>
+
+
+
+
 {% endblock %}
