@@ -109,9 +109,6 @@ def do_a_booking(request):
     period = BookingPeriod.objects.filter(start__lte=start_date,
                                           finish__gte=finish_date, property=property_to_rent).first()
 
-    bookings = Booking.objects.filter(checkin__range=(period.start, period.finish),
-                                      checkout__range=(period.start, period.finish))
-
     if not Booking.objects.filter(checkin__range=(start_date, finish_date),
                                   checkout__range=(start_date, finish_date)).exists():
         booking = Booking(
