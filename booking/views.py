@@ -10,9 +10,8 @@ from urllib.parse import urlencode
 
 
 def home_page(request):
-    cities = []
     cities = City.objects.all()
-    msg = request.GET.get('msg')  # 5
+    msg = request.GET.get('msg')
     return render(request, 'index.html', {'cities': cities, 'msg': msg})
 
 
@@ -72,7 +71,6 @@ def property_detail(request, id_property):
     images = Image.objects.filter(property__id=id_property)
     # format dd-mm-yyyy
     available_dates = []
-    reserved_periods = []
     reserved_dates = []
     final_dates = []
 
@@ -106,9 +104,6 @@ def do_a_booking(request):
     start_date = datetime.datetime.strptime(request.POST['datePickCheckin'], '%d-%m-%Y').date()
     finish_date = datetime.datetime.strptime(request.POST['datePickCheckout'], '%d-%m-%Y').date()
 
-    period = BookingPeriod.objects.filter(start__lte=start_date,
-                                          finish__gte=finish_date, property=property_to_rent).first()
-
     if not Booking.objects.filter(checkin__range=(start_date, finish_date),
                                   checkout__range=(start_date, finish_date)).exists():
         booking = Booking(
@@ -120,10 +115,10 @@ def do_a_booking(request):
             last_name=request.POST['lastname'])
         booking.save()
 
-    base_url = reverse('index')  # 1 /products/
-    query_string = urlencode({'msg': True})  # 2 category=42
-    url = '{}?{}'.format(base_url, query_string)  # 3 /products/?category=42
-    return redirect(url)  # 4
+    base_url = reverse('index')
+    query_string = urlencode({'msg': True})
+    url = '{}?{}'.format(base_url, query_string)
+    return redirect(url)
 
 
 def register_view(request):
