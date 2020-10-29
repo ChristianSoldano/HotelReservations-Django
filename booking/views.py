@@ -76,6 +76,7 @@ def property_detail(request, id_property):
     images = Image.objects.filter(property__id=id_property)
     # format dd-mm-yyyy
     reserved_dates = ["24-10-2020", "25-10-2020", "28-10-2020", "29-10-2020", "30-10-2020"]
+
     obj.thumbnail = (str(obj.thumbnail).replace("booking/static/", ""))
 
     for image in images:
