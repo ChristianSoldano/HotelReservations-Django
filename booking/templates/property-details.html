@@ -44,88 +44,88 @@
                                     <div class="property-more-table">
                                         <table class="left-table">
                                             <tbody>
-                                                <tr>
-                                                    <td class="pt-name">Night Price</td>
-                                                    <td class="p-value">$ {{property.rate}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pt-name">City</td>
-                                                    <td class="p-value">{{property.city.name}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pt-name">Address</td>
-                                                    <td class="p-value overview-description">{{property.address}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pt-name">Pax</td>
-                                                    <td class="p-value">{{property.pax}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pt-name">Rooms</td>
-                                                    <td class="p-value">{{property.rooms}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pt-name">Beds</td>
-                                                    <td class="p-value">{{property.beds}}</td>
-                                                </tr>
+                                            <tr>
+                                                <td class="pt-name">Night Price</td>
+                                                <td class="p-value">$ {{property.rate}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pt-name">City</td>
+                                                <td class="p-value">{{property.city.name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pt-name">Address</td>
+                                                <td class="p-value overview-description">{{property.address}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pt-name">Pax</td>
+                                                <td class="p-value">{{property.pax}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pt-name">Rooms</td>
+                                                <td class="p-value">{{property.rooms}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pt-name">Beds</td>
+                                                <td class="p-value">{{property.beds}}</td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                         <table class="right-table">
                                             <tbody>
-                                                <tr>
-                                                    <td class="pt-name">Bathrooms</td>
-                                                    <td class="p-value">{{property.bathrooms}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pt-name">Garage</td>
-                                                    <td class="p-value">
-                                                        {% if property.garage %}
-                                                        Yes
-                                                        {% else %}
-                                                        No
-                                                        {% endif %}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pt-name">Pets</td>
-                                                    <td class="p-value">
-                                                        {% if property.pets %}
-                                                        Yes
-                                                        {% else %}
-                                                        No
-                                                        {% endif %}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pt-name">Wifi</td>
-                                                    <td class="p-value">
-                                                        {% if property.wifi %}
-                                                        Yes
-                                                        {% else %}
-                                                        No
-                                                        {% endif %}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pt-name">Pool</td>
-                                                    <td class="p-value">
-                                                        {% if property.pool %}
-                                                        Yes
-                                                        {% else %}
-                                                        No
-                                                        {% endif %}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="pt-name">Kitchen</td>
-                                                    <td class="p-value">
-                                                        {% if property.garage %}
-                                                        Yes
-                                                        {% else %}
-                                                        No
-                                                        {% endif %}
-                                                    </td>
-                                                </tr>
+                                            <tr>
+                                                <td class="pt-name">Bathrooms</td>
+                                                <td class="p-value">{{property.bathrooms}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pt-name">Garage</td>
+                                                <td class="p-value">
+                                                    {% if property.garage %}
+                                                    Yes
+                                                    {% else %}
+                                                    No
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pt-name">Pets</td>
+                                                <td class="p-value">
+                                                    {% if property.pets %}
+                                                    Yes
+                                                    {% else %}
+                                                    No
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pt-name">Wifi</td>
+                                                <td class="p-value">
+                                                    {% if property.wifi %}
+                                                    Yes
+                                                    {% else %}
+                                                    No
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pt-name">Pool</td>
+                                                <td class="p-value">
+                                                    {% if property.pool %}
+                                                    Yes
+                                                    {% else %}
+                                                    No
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pt-name">Kitchen</td>
+                                                <td class="p-value">
+                                                    {% if property.garage %}
+                                                    Yes
+                                                    {% else %}
+                                                    No
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
 
                                             </tbody>
                                         </table>
@@ -138,20 +138,21 @@
             </div>
             <div class="col-lg-3">
                 <div class="property-sidebar">
-                    <h4>Reservation</h4>
+                    <h4 class="mb-3">Reservation</h4>
                     <div class="contact-text">
-                        <form action="/doABooking/" class="contact-form" id="reserve-form" method="post">
+                        <form action="/doABooking/" class="contact-form" id="reserve-form" method="post"
+                              onsubmit="event.preventDefault(); validateMyForm2();">
                             {% csrf_token %}
-                            <input id="idProperty" name="idProperty" type="hidden" value="{{property.id}}" />
-                            <input type="text" placeholder="First Name" name="firstname" id="firstname">
-                            <input type="text" placeholder="Last Name" name="lastname" id="lastname">
-                            <input type="email" placeholder="Email" name="email" id="email">
+                            <input id="idProperty" name="idProperty" type="hidden" value="{{property.id}}"/>
+                            <input type="text" placeholder="First Name" name="firstname" id="firstname" onkeydown="changeColor(this);">
+                            <input type="text" placeholder="Last Name" name="lastname" id="lastname" onkeydown="changeColor(this);">
+                            <input type="email" placeholder="Email" name="email" id="email" onkeydown="changeColor(this);">
 
                             <label for="datePickCheckin">Check-In:</label>
-                            <input id="datePickCheckin" name="datePickCheckin" placeholder="dd/mm/aaaa" />
+                            <input id="datePickCheckin" name="datePickCheckin" placeholder="dd/mm/aaaa" onchange="changeColor(this);"/>
 
                             <label for="datePickCheckout">Check-Out:</label>
-                            <input id="datePickCheckout" name="datePickCheckout" placeholder="dd/mm/aaaa" />
+                            <input id="datePickCheckout" name="datePickCheckout" placeholder="dd/mm/aaaa" onchange="changeColor(this);"/>
 
                             <div id="totalPriceDiv" class="mt-4">
                                 <span id="pricePerNight"></span> x <span id="nights"></span>
@@ -161,7 +162,7 @@
                                 <hr>
                                 <b>Total:</b><b class="pull-right" id="total">$15254</b>
                             </div>
-                            <button type="submit" class="site-btn mt-4">Reserve</button>
+                            <button type="submit" class="site-btn mt-4" onclick="validate();">Reserve</button>
                         </form>
                     </div>
                 </div>
@@ -263,9 +264,8 @@
         document.getElementById("totalPriceDiv").style.display = "block";
 };
 
+
 </script>
-
-
 
 
 {% endblock %}

@@ -1429,6 +1429,7 @@ ul, ol {
 	font-size: 22px;
 	font-weight: 600;
 	color: #19191a;
+	padding-top: 30px;
 }
 .property-sidebar .sidebar-btn {
 	margin-bottom: 30px;
@@ -1605,7 +1606,7 @@ ul, ol {
 }
 .property-list .single-property-item .property-pic img {
 	min-width: 100%;
-	height: 280px;
+	height: 200px;
 }
 .property-list .single-property-item .property-text .s-text {
 	font-size: 10px;
@@ -1795,6 +1796,7 @@ ul, ol {
 }
 .pd-details-text .property-more-pic .product-pic-zoom img {
 	min-width: 100%;
+	height: 500px
 }
 .pd-details-text .property-more-pic .product-thumbs .product-thumbs-track .pt {
 	cursor: pointer;

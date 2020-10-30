@@ -100,25 +100,31 @@ def property_detail(request, id_property):
 
 
 def do_a_booking(request):
-    property_to_rent = Property.objects.get(id=request.POST['idProperty'])
-    start_date = datetime.datetime.strptime(request.POST['datePickCheckin'], '%d-%m-%Y').date()
-    finish_date = datetime.datetime.strptime(request.POST['datePickCheckout'], '%d-%m-%Y').date()
+    if request.method == 'POST':
+        if "idProperty" and "firstname" and "lastname" and "email" and "datePickCheckin" and "datePickCheckout" in request.POST:
+            property_to_rent = Property.objects.get(id=request.POST['idProperty'])
+            start_date = datetime.datetime.strptime(request.POST['datePickCheckin'], '%d-%m-%Y').date()
+            finish_date = datetime.datetime.strptime(request.POST['datePickCheckout'], '%d-%m-%Y').date()
 
-    if not Booking.objects.filter(checkin__range=(start_date, finish_date),
-                                  checkout__range=(start_date, finish_date)).exists():
-        booking = Booking(
-            property=property_to_rent,
-            checkin=start_date,
-            checkout=finish_date,
-            email=request.POST['email'],
-            first_name=request.POST['firstname'],
-            last_name=request.POST['lastname'])
-        booking.save()
+            if not Booking.objects.filter(checkin__range=(start_date, finish_date),
+                                          checkout__range=(start_date, finish_date)).exists():
+                booking = Booking(
+                    property=property_to_rent,
+                    checkin=start_date,
+                    checkout=finish_date,
+                    email=request.POST['email'],
+                    first_name=request.POST['firstname'],
+                    last_name=request.POST['lastname'])
+                booking.save()
 
-    base_url = reverse('index')
-    query_string = urlencode({'msg': True})
-    url = '{}?{}'.format(base_url, query_string)
-    return redirect(url)
+            base_url = reverse('index')
+            query_string = urlencode({'msg': True})
+            url = '{}?{}'.format(base_url, query_string)
+            return redirect(url)
+        else:
+            return redirect("index")
+    else:
+        return redirect("index")
 
 
 def register_view(request):
@@ -126,34 +132,38 @@ def register_view(request):
 
 
 def register(request):
-    errors = []
-
     if request.method == 'POST':
-        if User.objects.filter(email=request.POST["email"]).exists():
-            errors.append("The email is already in use")
+        if "email" and "username" and "password" and "firstname" and "lastname" and "dni" in request.POST:
+            errors = []
+            if User.objects.filter(email=request.POST["email"]).exists():
+                errors.append("The email is already in use")
 
-        if User.objects.filter(username=request.POST["username"]).exists():
-            errors.append("The username is already in use")
+            if User.objects.filter(username=request.POST["username"]).exists():
+                errors.append("The username is already in use")
 
-        if Host.objects.filter(dni=request.POST["dni"]).exists():
-            errors.append("The dni is already in use")
+            if Host.objects.filter(dni=request.POST["dni"]).exists():
+                errors.append("The dni is already in use")
 
-        if errors:
-            return render(request, "register.html", {"errors": errors})
+            if errors:
+                return render(request, "register.html", {"errors": errors})
 
-        host = Host(email=request.POST["email"],
-                    username=request.POST["username"],
-                    first_name=request.POST["firstname"],
-                    last_name=request.POST["lastname"],
-                    dni=request.POST["dni"],
-                    is_staff=1,
-                    )
-        host.set_password(request.POST["password"])
-        host.save()
+            host = Host(email=request.POST["email"],
+                        username=request.POST["username"],
+                        first_name=request.POST["firstname"],
+                        last_name=request.POST["lastname"],
+                        dni=request.POST["dni"],
+                        is_staff=1,
+                        )
+            host.set_password(request.POST["password"])
+            host.save()
 
-        group = Group.objects.get(name='Host')
-        host.groups.add(group)
+            group = Group.objects.get(name='Host')
+            host.groups.add(group)
 
-        login_data = authenticate(username=request.POST["username"], password=request.POST["password"])
-        login(request, login_data)
-    return redirect("admin:index")
+            login_data = authenticate(username=request.POST["username"], password=request.POST["password"])
+            login(request, login_data)
+            return redirect("admin:index")
+        else:
+            return redirect("index")
+    else:
+        return redirect("index")
