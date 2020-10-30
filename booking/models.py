@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.functions import Now
 
+class PropertyManager(models.Manager):
+    def get_queryset(self, request):
+        query = Property.objects.filter(host=request.user)
+        if request.user.is_superuser:
+            query = Property.objects.all()
+        return query
+
 class Host(User):
     dni = models.CharField(max_length=8, unique=True)
     created_at = models.DateField(auto_now=True, blank=False, null=False)

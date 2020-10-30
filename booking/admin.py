@@ -6,15 +6,15 @@ from booking.models import *
 #    extra = 1
 #    max_num = 2
 
-class PropertyAdmin(admin.ModelAdmin):
-    #inlineList = [InlineBookingPeriod]
-    list_display = ['title', 'get_city_name', 'address']
-    search_fields = ('title',)
-
-    def get_city_name(self, obj):
-        return obj.city.name
-
-    get_city_name.short_description = 'City'  # Renames column head
+#class PropertyAdmin(admin.ModelAdmin):
+#    #inlineList = [InlineBookingPeriod]
+#    list_display = ['title', 'get_city_name', 'address']
+#    search_fields = ('title',)
+#
+#   def get_city_name(self, obj):
+#        return obj.city.name
+#
+#   get_city_name.short_description = 'City'  # Renames column head
 
 ####################################################################################################
 
@@ -53,6 +53,23 @@ class ImageAdmin(admin.ModelAdmin):
 
 class CityAdmin(admin.ModelAdmin):
     list_display = ['name']
+####################################################################################################
+
+class PropertyAdmin(admin.ModelAdmin):
+    # inlineList = [InlineBookingPeriod]
+    list_display = ['title', 'get_city_name', 'address']
+    search_fields = ('title',)
+
+    def get_city_name(self, obj):
+        return obj.city.name
+
+    get_city_name.short_description = 'City'  # Renames column head
+    #Using that queryset manager created before
+    def get_queryset(self, request):
+        queryset = PropertyManager.get_queryset(self, request)
+        return queryset
+
+
 ####################################################################################################
 
 admin.site.register(Property, PropertyAdmin)
