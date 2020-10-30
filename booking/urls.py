@@ -1,5 +1,8 @@
 from django.urls import path
 from booking.views import *
+from django.contrib import admin
+
+admin.site.site_header = "MyBooking developers"
 
 urlpatterns = [
     path('', home_page, name='index'),

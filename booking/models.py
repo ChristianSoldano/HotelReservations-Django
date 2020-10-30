@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.functions import Now
 
-
 class Host(User):
     dni = models.CharField(max_length=8, unique=True)
     created_at = models.DateField(auto_now=True, blank=False, null=False)
@@ -18,13 +17,15 @@ class City(models.Model):
     created_at = models.DateField(auto_now=True, blank=False, null=False)
     updated_at = models.DateField(auto_now=True, blank=False, null=False)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name_plural = "Cities"
         verbose_name = "City"
 
 
 class Property(models.Model):
-    # si explota hay que ver el on_delete de aca abajo. Cambia el ondelete por models.PROTECTED
     host = models.ForeignKey(Host, on_delete=models.PROTECT, blank=False, null=False)
     title = models.CharField(max_length=50, null=False, blank=False)
     address = models.CharField(max_length=50, null=True, blank=False)
@@ -46,6 +47,9 @@ class Property(models.Model):
     thumbnail = models.ImageField(null=False, upload_to="booking/static/img/properties",
                                   default="img/image-not-found.png")
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         verbose_name_plural = "Properties"
         verbose_name = "Property"
@@ -64,7 +68,6 @@ class Booking(models.Model):
     first_name = models.CharField(blank=False, null=False, max_length=50)
     last_name = models.CharField(blank=False, null=False, max_length=50)
     email = models.EmailField(blank=False, null=False, max_length=200)
-    # si explota hay que ver el on_delete de aca abajo. Cambia el ondelete por models.PROTECTED
     property = models.ForeignKey(Property, on_delete=models.PROTECT, blank=False, null=False)
     checkin = models.DateField(blank=False, null=False)
     checkout = models.DateField(blank=False, null=False)
@@ -85,8 +88,6 @@ class BookingPeriod(models.Model):
 
     class Meta:
         constraints = [
-            # TODO checkear que la fecha del nuevo periodo a cargar sea mayor a la de cierre del ultimo periodo
-            #  y que sea mayor a hoy
             models.CheckConstraint(
                 name="finish_date_constraint",
                 check=(models.Q(finish__gt=models.F("start") and Now()))
