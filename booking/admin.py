@@ -3,8 +3,6 @@ from booking.models import *
 
 class BookingAdmin(admin.ModelAdmin):
     list_display = ['combine_firstname_and_lastname', 'get_property_name', 'checkin', 'checkout']
-    #search_fields = ('start', 'finish',)
-
     def get_property_name(self, obj):
         return obj.property.title
 
@@ -57,7 +55,6 @@ class ImageAdmin(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'property':
             if not request.user.is_superuser:
-                #properties_list = Property.objects.filter(host = request.user)
 
                 kwargs ["queryset"] = Property.objects.filter(host = request.user)
                 kwargs ["initial"] = kwargs["queryset"][0]
@@ -70,14 +67,10 @@ class CityAdmin(admin.ModelAdmin):
 
 class InLineBookingPeriod(admin.TabularInline):
     model = BookingPeriod
-    extra = 1
-    max_num = 2
     fk_name = 'property'
 
 class InlineImage(admin.TabularInline):
     model = Image
-    extra = 1
-    max_num = 3
     fk_name = 'property'
 
 class PropertyAdmin(admin.ModelAdmin):
