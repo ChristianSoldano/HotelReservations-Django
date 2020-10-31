@@ -9,7 +9,7 @@
             <div class="col-lg-3">
                 <div class="property-sidebar">
                     <h4 class="mb-3">Search Property</h4>
-                    <form action="/list/" class="sidebar-search" method="post">
+                    <form action="/list/" class="sidebar-search" method="GET">
                         {% csrf_token %}
                         <select id="pax" name="pax">
                             <option selected="true" value="any">Any Paxs</option>
@@ -198,14 +198,14 @@
                         {% if properties.number == num %}
                         <span class=" pagination-current">{{ num }}</span>
                         {% elif num > properties.number|add:'-3' and num < properties.number|add:'3' %}
-                        <a href="?page={{ num }}">{{ num }}</a>
+                        <a href="{{final_url}}page={{ num }}">{{ num }}</a>
                         {% endif %}
                         {% endfor %}
                         {% if properties.has_next %}
-                        <a href="?page={{ properties.next_page_number }}">
+                        <a href="{{final_url}}page={{ properties.next_page_number }}">
                             <i class="fa fa-angle-right" aria-hidden="true"></i>
                         </a>
-                        <a href="?page={{ properties.paginator.num_pages }}">
+                        <a href="{{final_url}}page={{ properties.paginator.num_pages }}">
                             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                         </a>
                         {% endif %}

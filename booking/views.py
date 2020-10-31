@@ -37,30 +37,29 @@ def properties_list(request):
     property_filters = {
         "active": True
     }
-
-    if request.method == 'POST':
-        for key in request.POST:
-            if key != 'csrfmiddlewaretoken' and key != 'priceRange' and key != "datePickCheckout" and key != "datePickCheckin":
-                if request.POST[key] != "any":
-                    if request.POST[key] == 'true':
+    allowed_parameters = ["pax", "rooms", "bathrooms", "beds", "city", "garage", "pets", "wifi", "pool", "kitchen"]
+    if request.method == 'GET':
+        for key in request.GET:
+            if key in allowed_parameters:
+                if request.GET[key] != "any":
+                    if request.GET[key] == 'true':
                         property_filters[key] = True
                     else:
-                        property_filters[key + "__gte"] = int(request.POST[key])
+                        property_filters[key + "__gte"] = int(request.GET[key])
                     if key == "city":
-                        property_filters[key] = City.objects.filter(id=request.POST[key])[0]
+                        property_filters[key] = City.objects.filter(id=request.GET[key])[0]
+        if "priceRange" in request.GET:
+            price = request.GET["priceRange"].split("-")
+            property_filters["rate__gte"] = price[0]
+            property_filters["rate__lte"] = price[1]
 
-        price = request.POST["priceRange"].split("-")
-
-        property_filters["rate__gte"] = price[0]
-        property_filters["rate__lte"] = price[1]
-
-        if request.POST['datePickCheckin'] != "":
+        if "datePickCheckin" in request.GET and request.GET['datePickCheckin'] != "":
             booking_periods = BookingPeriod.objects.filter(
-                start__lte=datetime.datetime.strptime(request.POST['datePickCheckin'], '%d-%m-%Y').date(),
-                finish__gte=datetime.datetime.strptime(request.POST['datePickCheckout'], '%d-%m-%Y').date())
+                start__lte=datetime.datetime.strptime(request.GET['datePickCheckin'], '%d-%m-%Y').date(),
+                finish__gte=datetime.datetime.strptime(request.GET['datePickCheckout'], '%d-%m-%Y').date())
             for period in booking_periods:
-                checkin = datetime.datetime.strptime(request.POST['datePickCheckin'], '%d-%m-%Y').date()
-                checkout = datetime.datetime.strptime(request.POST['datePickCheckout'], '%d-%m-%Y').date()
+                checkin = datetime.datetime.strptime(request.GET['datePickCheckin'], '%d-%m-%Y').date()
+                checkout = datetime.datetime.strptime(request.GET['datePickCheckout'], '%d-%m-%Y').date()
 
                 if not Booking.objects.filter(
                         Q(checkin__range=(checkin, checkout)) | Q(checkout__range=(checkin, checkout))).exists():
@@ -81,7 +80,15 @@ def properties_list(request):
     paginator = Paginator(properties, 5)
     page = request.GET.get('page')
     properties = paginator.get_page(page)
-    return render(request, 'property-list.html', {'properties': properties, 'cities': cities})
+
+    if request.method == 'GET':
+        url_params = request.GET.copy()
+        final_url = "?"
+        for p in url_params:
+            if p != "page":
+                final_url += p + "=" + url_params[p] + "&"
+
+    return render(request, 'property-list.html', {'properties': properties, 'cities': cities, 'final_url': final_url})
 
 
 def property_detail(request, id_property):

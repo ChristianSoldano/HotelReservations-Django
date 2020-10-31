@@ -1,9 +1,11 @@
 from django.contrib import admin
 from booking.models import *
 
+
 class BookingAdmin(admin.ModelAdmin):
     list_display = ['combine_firstname_and_lastname', 'get_property_name', 'checkin', 'checkout']
-    #search_fields = ('start', 'finish',)
+
+    # search_fields = ('start', 'finish',)
 
     def get_property_name(self, obj):
         return obj.property.title
@@ -17,6 +19,8 @@ class BookingAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         queryset = BookingManager.get_queryset(self, request)
         return queryset
+
+
 ####################################################################################################
 
 class BookingPeriodAdmin(admin.ModelAdmin):
@@ -35,11 +39,13 @@ class BookingPeriodAdmin(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'property':
             if not request.user.is_superuser:
-                #properties_list = Property.objects.filter(host = request.user)
+                # properties_list = Property.objects.filter(host = request.user)
 
-                kwargs ["queryset"] = Property.objects.filter(host = request.user)
-                kwargs ["initial"] = kwargs["queryset"][0]
+                kwargs["queryset"] = Property.objects.filter(host=request.user)
+                kwargs["initial"] = kwargs["queryset"][0]
         return super(BookingPeriodAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+
 ####################################################################################################
 
 class ImageAdmin(admin.ModelAdmin):
@@ -57,28 +63,30 @@ class ImageAdmin(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'property':
             if not request.user.is_superuser:
-                #properties_list = Property.objects.filter(host = request.user)
+                # properties_list = Property.objects.filter(host = request.user)
 
-                kwargs ["queryset"] = Property.objects.filter(host = request.user)
-                kwargs ["initial"] = kwargs["queryset"][0]
+                kwargs["queryset"] = Property.objects.filter(host=request.user)
+                kwargs["initial"] = kwargs["queryset"][0]
         return super(ImageAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+
 ####################################################################################################
 
 class CityAdmin(admin.ModelAdmin):
     list_display = ['name']
+
+
 ####################################################################################################
 
 class InLineBookingPeriod(admin.TabularInline):
     model = BookingPeriod
-    extra = 1
-    max_num = 2
     fk_name = 'property'
+
 
 class InlineImage(admin.TabularInline):
     model = Image
-    extra = 1
-    max_num = 3
     fk_name = 'property'
+
 
 class PropertyAdmin(admin.ModelAdmin):
     inlines = [InLineBookingPeriod, InlineImage]
@@ -98,9 +106,11 @@ class PropertyAdmin(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'host':
             if not request.user.is_superuser:
-                kwargs ["queryset"] = Host.objects.filter(username = request.user)
-                kwargs ["initial"] = kwargs["queryset"][0]
+                kwargs["queryset"] = Host.objects.filter(username=request.user)
+                kwargs["initial"] = kwargs["queryset"][0]
         return super(PropertyAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+
 ####################################################################################################
 
 admin.site.register(Property, PropertyAdmin)
@@ -109,5 +119,3 @@ admin.site.register(BookingPeriod, BookingPeriodAdmin)
 admin.site.register(Image, ImageAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Host)
-
-
