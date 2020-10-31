@@ -17,7 +17,6 @@ class BookingAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         queryset = BookingManager.get_queryset(self, request)
         return queryset
-
 ####################################################################################################
 
 class BookingPeriodAdmin(admin.ModelAdmin):
@@ -32,6 +31,15 @@ class BookingPeriodAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         queryset = BookingPeriodManager.get_queryset(self, request)
         return queryset
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'property':
+            if not request.user.is_superuser:
+                #properties_list = Property.objects.filter(host = request.user)
+
+                kwargs ["queryset"] = Property.objects.filter(host = request.user)
+                kwargs ["initial"] = kwargs["queryset"][0]
+        return super(BookingPeriodAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 ####################################################################################################
 
 class ImageAdmin(admin.ModelAdmin):
@@ -46,7 +54,14 @@ class ImageAdmin(admin.ModelAdmin):
         queryset = ImageManager.get_queryset(self, request)
         return queryset
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'property':
+            if not request.user.is_superuser:
+                #properties_list = Property.objects.filter(host = request.user)
 
+                kwargs ["queryset"] = Property.objects.filter(host = request.user)
+                kwargs ["initial"] = kwargs["queryset"][0]
+        return super(ImageAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 ####################################################################################################
 
 class CityAdmin(admin.ModelAdmin):
@@ -70,11 +85,9 @@ class PropertyAdmin(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'host':
             if not request.user.is_superuser:
-                print(Host.objects.filter(username = request.user))
                 kwargs ["queryset"] = Host.objects.filter(username = request.user)
                 kwargs ["initial"] = kwargs["queryset"][0]
         return super(PropertyAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-
 ####################################################################################################
 
 admin.site.register(Property, PropertyAdmin)
