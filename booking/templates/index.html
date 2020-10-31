@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block imports %}
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 {% endblock%}
 
@@ -158,11 +157,11 @@
                 </div>
             </div>
         </div>
-    </div>
 </section>
 
+
 <script>
-     var midatepicker2 = $('#datePickCheckout').datepicker({
+var midatepicker2 = $('#datePickCheckout').datepicker({
         format: "dd-mm-yyyy",
         autoclose: true,
     });
@@ -181,9 +180,35 @@
     });
 
 
-{% if msg%}
-    swal("All done!", "¡The reservation was made successfully!", "success");
-{% endif%}
+</script>
+
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    {% if params %}
+
+    Swal.fire({
+        title: '¡All done!',
+        html: `<div class="text-left">
+            Thank you <strong>{{params.name}}</strong>, the reservation has been registered.<br><br>
+            <strong>Reservation info:</strong>
+            <br>
+            Reservation Nº: <strong class="pull-right">{{params.booking_id}}</strong>
+            <br>
+            Property: <strong class="pull-right">{{params.property_title}}</strong>
+            <br>
+            Checkin: <strong class="pull-right">{{params.checkin}}</strong>
+            <br>
+            Checkout: <strong class="pull-right">{{params.checkout}}</strong>
+            <br>
+            Total: <strong class="pull-right">${{params.total}}</strong>
+
+        </div>`,
+        icon: 'success',
+        confirmButtonText: 'OK'
+    })
+    {% endif %}
 
 </script>
+{% endblock %}
 {% endblock %}

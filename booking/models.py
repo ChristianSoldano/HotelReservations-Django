@@ -107,6 +107,7 @@ class Booking(models.Model):
     last_name = models.CharField(blank=False, null=False, max_length=50)
     email = models.EmailField(blank=False, null=False, max_length=200)
     property = models.ForeignKey(Property, on_delete=models.PROTECT, blank=False, null=False)
+    total = models.FloatField(blank=False, null=False, default=0)
     checkin = models.DateField(blank=False, null=False)
     checkout = models.DateField(blank=False, null=False)
     created_at = models.DateField(auto_now=True, blank=False, null=False)
