@@ -7,6 +7,7 @@ from django.db.models import Q
 import pandas
 from django.urls import reverse
 from urllib.parse import urlencode
+from django.core.paginator import Paginator
 
 
 def home_page(request):
@@ -63,6 +64,9 @@ def properties_list(request):
     for p in properties:
         p.thumbnail = (str(p.thumbnail).replace("booking/static/", ""))
 
+    paginator = Paginator(properties, 5)
+    page = request.GET.get('page')
+    properties = paginator.get_page(page)
     return render(request, 'property-list.html', {'properties': properties, 'cities': cities})
 
 

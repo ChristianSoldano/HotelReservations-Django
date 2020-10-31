@@ -1672,6 +1672,23 @@ ul, ol {
 .property-pagination {
 	padding-top: 10px;
 }
+
+.property-pagination .pagination-current{
+    display: inline-block;
+	width: 40px;
+	height: 40px;
+	border: 1px solid #ebebeb;
+	line-height: 40px;
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	color: black;
+	-webkit-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+	margin-right: 6px;
+}
+
 .property-pagination a {
 	display: inline-block;
 	width: 40px;
