@@ -68,8 +68,17 @@ class CityAdmin(admin.ModelAdmin):
     list_display = ['name']
 ####################################################################################################
 
+class InLineBookingPeriod(admin.TabularInline):
+    model = BookingPeriod
+    fk_name = 'property'
+
+class InlineImage(admin.TabularInline):
+    model = Image
+    fk_name = 'property'
+
 class PropertyAdmin(admin.ModelAdmin):
-    # inlineList = [InlineBookingPeriod]
+    Inlines = [InLineBookingPeriod, InlineImage,]
+
     list_display = ['title', 'get_city_name', 'address']
     search_fields = ('title',)
 
@@ -77,7 +86,7 @@ class PropertyAdmin(admin.ModelAdmin):
         return obj.city.name
 
     get_city_name.short_description = 'City'  # Renames column head
-    #Using that queryset manager created before
+
     def get_queryset(self, request):
         queryset = PropertyManager.get_queryset(self, request)
         return queryset
