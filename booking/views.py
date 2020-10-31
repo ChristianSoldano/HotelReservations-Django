@@ -12,20 +12,19 @@ from django.core.paginator import Paginator
 
 def home_page(request):
     cities = City.objects.all()
-    if request.method == 'GET':
+    if "booking_id" and "property_title" and "checkin" and "checkout" and "name" and "total" in request.GET:
         booking_id = request.GET.get('booking_id')
         property_title = request.GET.get('property_title')
-        checkin = request.GET.get('checkin')
-        checkout = request.GET.get('checkout')
+        checkin = datetime.datetime.strptime(request.GET.get('checkin'), '%Y-%m-%d').strftime('%d-%m-%Y')
+        checkout = datetime.datetime.strptime(request.GET.get('checkout'), '%Y-%m-%d').strftime('%d-%m-%Y')
         name = request.GET.get('name')
         total = request.GET.get('total')
         params = {'booking_id': booking_id,
                   "property_title": property_title,
-                  "checkin": datetime.datetime.strptime(checkin, '%Y-%m-%d').strftime('%d-%m-%Y'),
-                  "checkout": datetime.datetime.strptime(checkout, '%Y-%m-%d').strftime('%d-%m-%Y'),
+                  "checkin": checkin,
+                  "checkout": checkout,
                   "name": name,
                   "total": total}
-        print(params["name"])
         return render(request, 'index.html', {'cities': cities, 'params': params})
     else:
         return render(request, 'index.html', {'cities': cities})
