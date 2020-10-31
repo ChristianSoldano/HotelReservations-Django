@@ -75,9 +75,9 @@
                                     </div>
                                     <div class="first-row">
                                         <input class="reservation-date" id="datePickCheckin" name="datePickCheckin"
-                                            placeholder="dd/mm/aaaa" />
+                                               placeholder="dd/mm/aaaa"/>
                                         <input class="reservation-date" id="datePickCheckout" name="datePickCheckout"
-                                            placeholder="dd/mm/aaaa" />
+                                               placeholder="dd/mm/aaaa"/>
                                         <select id="city" name="city">
                                             <option selected="true" value="any">Any City</option>
                                             {% for city in cities %}
@@ -97,7 +97,7 @@
                                         <div class="check-boxes">
                                             <label for="garage"> Garage</label>
                                             <input class="mr-5 mt-4" type="checkbox" id="garage" name="garage"
-                                                value="true">
+                                                   value="true">
 
                                             <label for="pets"> Pets</label>
                                             <input class="mr-5" type="checkbox" id="pets" name="pets" value="true">
@@ -156,16 +156,12 @@
                     <h4>Make Your Booking</h4>
                 </div>
             </div>
-        </div>        
-    </section>
-    </div>
+        </div>
+</section>
 
 
-
-{% block javascript %}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-    var midatepicker2 = $('#datePickCheckout').datepicker({
+var midatepicker2 = $('#datePickCheckout').datepicker({
         format: "dd-mm-yyyy",
         autoclose: true,
     });
@@ -184,9 +180,13 @@
     });
 
 
+</script>
 
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
     {% if params %}
-    
+
     Swal.fire({
         title: '¡All done!',
         html: `<div class="text-left">
@@ -202,14 +202,13 @@
             Checkout: <strong class="pull-right">{{params.checkout}}</strong>
             <br>
             Total: <strong class="pull-right">${{params.total}}</strong>
-            
+
         </div>`,
         icon: 'success',
         confirmButtonText: 'OK'
     })
     {% endif %}
 
-
 </script>
-{% endblock%}
+{% endblock %}
 {% endblock %}
