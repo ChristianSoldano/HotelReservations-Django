@@ -70,14 +70,18 @@ class CityAdmin(admin.ModelAdmin):
 
 class InLineBookingPeriod(admin.TabularInline):
     model = BookingPeriod
+    extra = 1
+    max_num = 2
     fk_name = 'property'
 
 class InlineImage(admin.TabularInline):
     model = Image
+    extra = 1
+    max_num = 3
     fk_name = 'property'
 
 class PropertyAdmin(admin.ModelAdmin):
-    Inlines = [InLineBookingPeriod, InlineImage,]
+    inlines = [InLineBookingPeriod, InlineImage]
 
     list_display = ['title', 'get_city_name', 'address']
     search_fields = ('title',)
