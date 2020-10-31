@@ -144,6 +144,7 @@
                               onsubmit="event.preventDefault(); validateMyForm2();">
                             {% csrf_token %}
                             <input id="idProperty" name="idProperty" type="hidden" value="{{property.id}}"/>
+                            <input id="totalDays" name="totalDays" type="hidden" value="0"/>
                             <input type="text" placeholder="First Name" name="firstname" id="firstname" onkeydown="changeColor(this);">
                             <input type="text" placeholder="Last Name" name="lastname" id="lastname" onkeydown="changeColor(this);">
                             <input type="email" placeholder="Email" name="email" id="email" onkeydown="changeColor(this);">
@@ -260,6 +261,7 @@
         document.getElementById("subTotal").innerHTML = "$" + subTotal;
         document.getElementById("serviceTax").innerHTML = "$" + serviceTax;
         document.getElementById("total").innerHTML = "$" + total;
+        document.getElementById("totalDays").value = differenceInDays;
 
         document.getElementById("totalPriceDiv").style.display = "block";
 };

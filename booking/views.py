@@ -12,8 +12,23 @@ from django.core.paginator import Paginator
 
 def home_page(request):
     cities = City.objects.all()
-    msg = request.GET.get('msg')
-    return render(request, 'index.html', {'cities': cities, 'msg': msg})
+    if request.method == 'GET':
+        booking_id = request.GET.get('booking_id')
+        property_title = request.GET.get('property_title')
+        checkin = request.GET.get('checkin')
+        checkout = request.GET.get('checkout')
+        name = request.GET.get('name')
+        total = request.GET.get('total')
+        params = {'booking_id': booking_id,
+                  "property_title": property_title,
+                  "checkin": datetime.datetime.strptime(checkin, '%Y-%m-%d').strftime('%d-%m-%Y'),
+                  "checkout": datetime.datetime.strptime(checkout, '%Y-%m-%d').strftime('%d-%m-%Y'),
+                  "name": name,
+                  "total": total}
+        print(params["name"])
+        return render(request, 'index.html', {'cities': cities, 'params': params})
+    else:
+        return render(request, 'index.html', {'cities': cities})
 
 
 def properties_list(request):
@@ -105,7 +120,9 @@ def property_detail(request, id_property):
 
 def do_a_booking(request):
     if request.method == 'POST':
-        if "idProperty" and "firstname" and "lastname" and "email" and "datePickCheckin" and "datePickCheckout" in request.POST:
+        if "idProperty" and "firstname" and "lastname" and "email" and "datePickCheckin" and "datePickCheckout" and \
+                "totalDays" in request.POST:
+            print(request.POST["totalDays"])
             property_to_rent = Property.objects.get(id=request.POST['idProperty'])
             start_date = datetime.datetime.strptime(request.POST['datePickCheckin'], '%d-%m-%Y').date()
             finish_date = datetime.datetime.strptime(request.POST['datePickCheckout'], '%d-%m-%Y').date()
@@ -118,11 +135,18 @@ def do_a_booking(request):
                     checkout=finish_date,
                     email=request.POST['email'],
                     first_name=request.POST['firstname'],
-                    last_name=request.POST['lastname'])
+                    last_name=request.POST['lastname'],
+                    total=property_to_rent.rate * float(request.POST["totalDays"]) * 1.08)
                 booking.save()
 
             base_url = reverse('index')
-            query_string = urlencode({'msg': True})
+
+            query_string = urlencode({'booking_id': booking.id,
+                                      "property_title": property_to_rent.title,
+                                      "checkin": booking.checkin,
+                                      "checkout": booking.checkout,
+                                      "name": booking.first_name + " " + booking.last_name,
+                                      "total": booking.total})
             url = '{}?{}'.format(base_url, query_string)
             return redirect(url)
         else:

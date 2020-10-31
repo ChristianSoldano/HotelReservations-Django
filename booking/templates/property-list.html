@@ -185,31 +185,32 @@
 
                 </div>
 
-                <div class="property-pagination text-center">
-                    {% if properties.has_previous %}
-                    <a href="?page=1">
-                        <i class="fa fa-angle-double-left" aria-hidden="true"></i> </a>
-                    <a href="?page={{ properties.previous_page_number }}">
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
-                    </a>
-                    {% endif %}
-                    {% for num in properties.paginator.page_range %}
-                    {% if properties.number == num %}
-                    <span class=" pagination-current">{{ num }}</span>
-                    {% elif num > properties.number|add:'-3' and num < properties.number|add:'3' %}
-                    <a href="?page={{ num }}">{{ num }}</a>
-                    {% endif %}
-                    {% endfor %}
-                    {% if properties.has_next %}
-                    <a href="?page={{ properties.next_page_number }}">
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </a>
-                    <a href="?page={{ properties.paginator.num_pages }}">
-                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-                    </a>
-                    {% endif %}
-                </div>
-
+                {% if properties.paginator.num_pages > 1 %}
+                    <div class="property-pagination text-center">
+                        {% if properties.has_previous %}
+                        <a href="?page=1">
+                            <i class="fa fa-angle-double-left" aria-hidden="true"></i> </a>
+                        <a href="?page={{ properties.previous_page_number }}">
+                            <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        </a>
+                        {% endif %}
+                        {% for num in properties.paginator.page_range %}
+                        {% if properties.number == num %}
+                        <span class=" pagination-current">{{ num }}</span>
+                        {% elif num > properties.number|add:'-3' and num < properties.number|add:'3' %}
+                        <a href="?page={{ num }}">{{ num }}</a>
+                        {% endif %}
+                        {% endfor %}
+                        {% if properties.has_next %}
+                        <a href="?page={{ properties.next_page_number }}">
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        </a>
+                        <a href="?page={{ properties.paginator.num_pages }}">
+                            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
 
             </div>
         </div>
