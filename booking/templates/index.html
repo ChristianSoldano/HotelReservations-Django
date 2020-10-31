@@ -201,7 +201,7 @@ var midatepicker2 = $('#datePickCheckout').datepicker({
             <br>
             Checkout: <strong class="pull-right">{{params.checkout}}</strong>
             <br>
-            Total: <strong class="pull-right">${{params.total}}</strong>
+            Total: <strong class="pull-right">$${Number.parseFloat({{params.total}}).toFixed(2)}</strong>
 
         </div>`,
         icon: 'success',
