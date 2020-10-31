@@ -9,6 +9,37 @@ class PropertyManager(models.Manager):
             query = Property.objects.all()
         return query
 
+
+class ImageManager(models.Manager):
+    def get_queryset(self, request):
+        if request.user.is_superuser:
+            query2 = Image.objects.all()
+        else:
+            query = Property.objects.filter(host=request.user)
+            query2 = Image.objects.filter(property__in = query)
+
+        return query2
+
+class BookingPeriodManager(models.Manager):
+    def get_queryset(self, request):
+        if request.user.is_superuser:
+            query2 = BookingPeriod.objects.all()
+        else:
+            query = Property.objects.filter(host=request.user)
+            query2 = BookingPeriod.objects.filter(property__in = query)
+
+        return query2
+
+class BookingManager(models.Manager):
+    def get_queryset(self, request):
+        if request.user.is_superuser:
+            query2 = Booking.objects.all()
+        else:
+            query = Property.objects.filter(host=request.user)
+            query2 = Booking.objects.filter(property__in=query)
+
+        return query2
+
 class Host(User):
     dni = models.CharField(max_length=8, unique=True)
     created_at = models.DateField(auto_now=True, blank=False, null=False)
